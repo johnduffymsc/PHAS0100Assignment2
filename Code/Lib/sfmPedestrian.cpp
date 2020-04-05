@@ -12,7 +12,10 @@
 
 =============================================================================*/
 
+#include "sfmBasicTypes.h"
 #include "sfmPedestrian.h"
+
+#include <iostream>
 
 
 // A class that implements a pedestrian.
@@ -33,9 +36,9 @@ namespace sfm {
   };
 
   Pedestrian::~Pedestrian() {};
-  
+
   void Pedestrian::print_velocity_and_position() {
-    std::cout << velocity << "\t" << position << std::endln;
+    std::cout << velocity << "\t" << position.get_x_wrap() << " " << position.get_y_wrap() << std::endl;
   };
 
 } // end namespace

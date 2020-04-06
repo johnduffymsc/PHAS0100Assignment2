@@ -34,6 +34,12 @@ namespace sfm {
 
     void print_velocity_and_position();
 
+    void move(dir2d& direction);
+
+    double get_velocity(void);
+    
+    pos2d get_position(void);
+    
   private:
     const pos2d origin;
     const pos2d destination;

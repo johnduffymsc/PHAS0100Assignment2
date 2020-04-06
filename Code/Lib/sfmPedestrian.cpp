@@ -39,7 +39,19 @@ namespace sfm {
   }
 
   void Pedestrian::print_velocity_and_position() {
-    std::cout << velocity << "\t" << position.get_x_wrap() << " " << position.get_y_wrap() << std::endl;
+    std::cout << velocity << std::endl;
+  }
+
+  void Pedestrian::move(dir2d& direction) {
+    position = position + direction;
+  }
+
+  double Pedestrian::get_velocity(void) {
+    return velocity;
+  }
+  
+  pos2d Pedestrian::get_position(void) {
+    return position;
   }
 
 } // end namespace

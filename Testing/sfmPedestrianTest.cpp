@@ -28,7 +28,6 @@ TEST_CASE("Pedestrian instance", "[pedestrian]" ) {
   const double relaxation_time {0.5};
   sfm::Pedestrian pedestrian(origin, destination, desired_speed, relaxation_time);
   REQUIRE(1 == 1);
-  REQUIRE(1 == 0);
   //REQUIRE(pedestrian.get_y_wrap == );
   //REQUIRE(pedestrian.get_x_wrap == );
   //REQUIRE(pedestrian.get_x_wrap == );

@@ -33,12 +33,13 @@ namespace sfm {
   {
     velocity = desired_speed;
     position = origin;
-  };
+  }
 
-  Pedestrian::~Pedestrian() {};
+  Pedestrian::~Pedestrian() {
+  }
 
   void Pedestrian::print_velocity_and_position() {
     std::cout << velocity << "\t" << position.get_x_wrap() << " " << position.get_y_wrap() << std::endl;
-  };
+  }
 
 } // end namespace

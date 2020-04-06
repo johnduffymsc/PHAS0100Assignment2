@@ -85,22 +85,24 @@ endif()
 
 
 ######################################################################
-# Choose C++ standard. Currently 11, as we try to support VS2013.
+# Choose C++ standard. Currently 14.
 ######################################################################
-set(PHAS0100ASSIGNMENT2_CXX_STANDARD 11)
+set(PHAS0100ASSIGNMENT2_CXX_STANDARD 14)
 set(CMAKE_CXX_EXTENSIONS 0)
 set(CMAKE_CXX_STANDARD ${PHAS0100ASSIGNMENT2_CXX_STANDARD})
 set(CMAKE_CXX_STANDARD_REQUIRED 1)
 
+# TODO: Figure out what the below does, and set it to C++ 14. 
+
 # This is necessary to avoid problems with compile feature checks.
-# CMAKE_CXX_STANDARD seems to only set the -std=c++11 flag for targets.
-# However, compile flag checks also need to be done with -std=c++11.
-# The PHAS0100ASSIGNMENT2_CXX11_FLAG variable is also used for external projects
+# CMAKE_CXX_STANDARD seems to only set the -std=c++14 flag for targets.
+# However, compile flag checks also need to be done with -std=c++14.
+# The PHAS0100ASSIGNMENT2_CXX14_FLAG variable is also used for external projects
 # build during the PHAS0100ASSIGNMENT2 super-build.
-mitkFunctionCheckCompilerFlags("-std=c++11" PHAS0100ASSIGNMENT2_CXX11_FLAG)
-if(NOT PHAS0100ASSIGNMENT2_CXX11_FLAG)
+mitkFunctionCheckCompilerFlags("-std=c++14" PHAS0100ASSIGNMENT2_CXX14_FLAG)
+if(NOT PHAS0100ASSIGNMENT2_CXX14_FLAG)
   # Older gcc compilers use -std=c++0x
-  mitkFunctionCheckCompilerFlags("-std=c++0x" PHAS0100ASSIGNMENT2_CXX11_FLAG)
+  mitkFunctionCheckCompilerFlags("-std=c++0x" PHAS0100ASSIGNMENT2_CXX14_FLAG)
 endif()
 
 

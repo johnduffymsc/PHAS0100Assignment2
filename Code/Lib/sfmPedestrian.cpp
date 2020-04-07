@@ -22,36 +22,32 @@
 
 namespace sfm {
 
-  Pedestrian::Pedestrian(const pos2d origin,
-			 const pos2d destination,
-			 const double desired_speed,
-			 const double relaxation_time)
-    : origin(origin),
-      destination(destination),
-      desired_speed(desired_speed),
-      relaxation_time(relaxation_time)
-  {
-    velocity = desired_speed;
-    position = origin;
-  }
+  Pedestrian::Pedestrian(pos2d &origin, pos2d &destination, double &desired_speed, double &relaxation_time)
+    : origin{origin},
+      destination{destination},
+      desired_speed{desired_speed},
+      relaxation_time{relaxation_time},
+      velocity{(destination - origin)},
+      position{origin}
+  {}
 
-  Pedestrian::~Pedestrian() {
-  }
+  Pedestrian::~Pedestrian() {}
 
-  void Pedestrian::print_velocity_and_position() {
-    std::cout << velocity << std::endl;
-  }
-
-  void Pedestrian::move(dir2d& direction) {
+  void Pedestrian::move(dir2d &direction) {
     position = position + direction;
   }
 
-  double Pedestrian::get_velocity(void) {
+  dir2d Pedestrian::get_velocity(void) {
     return velocity;
   }
   
   pos2d Pedestrian::get_position(void) {
     return position;
+  }
+
+  void Pedestrian::print_velocity_and_position() {
+    //std::cout << velocity << " " << get_position().x() << " " << get_position().y() << std::endl;
+    ;
   }
 
 } // end namespace

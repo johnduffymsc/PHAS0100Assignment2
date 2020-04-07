@@ -25,28 +25,25 @@ namespace sfm {
 
   class Pedestrian : public MoverI {
   public:
-    Pedestrian(const pos2d origin,
-	       const pos2d destination,
-	       const double desired_speed,
-	       const double relaxation_time);
+    Pedestrian(pos2d &origin, pos2d &destination, double &desired_speed, double &relaxation_time);
 
     ~Pedestrian();
 
-    void print_velocity_and_position();
+    void move(dir2d &direction);
 
-    void move(dir2d& direction);
-
-    double get_velocity(void);
+    dir2d get_velocity(void);
     
     pos2d get_position(void);
     
+    void print_velocity_and_position();
+
   private:
-    const pos2d origin;
-    const pos2d destination;
-    double velocity;
+    pos2d origin;
+    pos2d destination;
+    double desired_speed;
+    double relaxation_time;
+    dir2d velocity;
     pos2d position;
-    const double desired_speed;
-    const double relaxation_time;
   };
 
 } // end namespace

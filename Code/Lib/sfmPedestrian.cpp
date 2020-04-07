@@ -27,7 +27,7 @@ namespace sfm {
       destination{destination},
       desired_speed{desired_speed},
       relaxation_time{relaxation_time},
-      velocity{(destination - origin)},
+      velocity{(origin - destination) * (1.0 / (origin - destination).length()) * desired_speed},
       position{origin}
   {}
 

@@ -35,7 +35,8 @@ TEST_CASE("Pedestrian instantiation", "[pedestrian]" ) {
   REQUIRE(typeid(pedestrian) == typeid(sfm::Pedestrian));
 
   // Test the initial velocity is the desired velocity.
-  //REQUIRE(pedestrian.get_velocity() == 1.0);
+  REQUIRE(pedestrian.get_velocity().x() == 1.0);
+  REQUIRE(pedestrian.get_velocity().y() == 0.0);
 
   // Test the pedestrian is at the origin.
   REQUIRE(pedestrian.get_position().x() == 0.0);

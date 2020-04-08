@@ -10,6 +10,8 @@
 
   See LICENSE.txt in the top level directory for details.
 
+  Author: John Duffy
+
 =============================================================================*/
 
 #include "sfmTypes.h"
@@ -55,12 +57,12 @@ namespace sfm { // Start namespace.
   
   Pos2d::Pos2d(void) : x{0.0}, y{0.0} {};
 
-  Pos2d::Pos2d(const double x, const double y) : x{x}, y{y} {};
+  Pos2d::Pos2d(const double x, const double y) : x{Wrap(x, POS2D_XWRAP)}, y{Wrap(y, POS2D_YWRAP)} {};
 
   Pos2d::~Pos2d(void) {};
 
   Pos2d Pos2d::operator+(const Vec2d v) {
-    return Pos2d(x + v.GetXLength(), y + v.GetYLength());
+    return Pos2d(Wrap(x + v.GetXLength(), POS2D_XWRAP), Wrap(y + v.GetYLength(), POS2D_YWRAP));
   }
 
   Vec2d Pos2d::operator-(const Pos2d p) {
@@ -73,6 +75,13 @@ namespace sfm { // Start namespace.
 
   double Pos2d::GetY() const {
     return y;
+  }
+
+  double Pos2d::Wrap(const double z, const double max_z) { // Recursive method!
+    if (z / max_z > 1.0) {
+      return Wrap(z - max_z, max_z);
+    }
+    return z; 
   }
 
 } // End namespace.

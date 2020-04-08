@@ -87,6 +87,7 @@ namespace sfm { // Start namespace.
     double GetX() const;
     double GetY() const;
   private:
+    static double Wrap(const double z, const double max_z); // Recursive method!
     double x;
     double y;
   };

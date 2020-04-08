@@ -44,6 +44,27 @@ TEST_CASE("Pedestrian instantiation", "[pedestrian]" ) {
 
 }
 
+TEST_CASE("Pedestrian instantiation wrapping", "[pedestrian]" ) {
+
+  // Create a pedestrian outside of world.
+  const sfm::Pos2d origin(POS2D_XWRAP + 1.0, POS2D_YWRAP + 1.0);
+  const sfm::Pos2d destination(POS2D_XWRAP, 0.0);
+  const double desired_speed {1.0};
+  const double relaxation_time {0.5};
+  sfm::Pedestrian p(origin, destination, desired_speed, relaxation_time);
+
+  // Test the instantiation of the pedestrian.
+  REQUIRE(typeid(p) == typeid(sfm::Pedestrian));
+
+  // Test the initial velocity is the desired velocity.
+  REQUIRE(p.GetVelocity().GetXLength() == 0.0);
+  REQUIRE(p.GetVelocity().GetYLength() == 0.0);
+
+  // Test the pedestrian is at (1.0, 1.0).
+  REQUIRE(p.GetPosition().GetX() == 1.0);
+  REQUIRE(p.GetPosition().GetY() == 1.0);
+
+}
 
 TEST_CASE("Pedestrian movement, including wrapping", "[pedestrian]" ) {
 
@@ -61,35 +82,24 @@ TEST_CASE("Pedestrian movement, including wrapping", "[pedestrian]" ) {
   // Create a vector half the world size in the x and y directions.
   sfm::Vec2d halfworld_xy(POS2D_XWRAP / 2.0, POS2D_YWRAP / 2.0);
   
-  // Move half the world size, and test the result.
+  // Move half the world size.
   p.SetPosition(p.GetPosition() + halfworld_xy);
   REQUIRE(p.GetPosition().GetX() == POS2D_XWRAP / 2.0);
   REQUIRE(p.GetPosition().GetY() == POS2D_YWRAP / 2.0);
 
-  /*
-  // Move half the world size, again, and test the .
-  p.Move(halfworld_xy);
-  REQUIRE(p.GetPosition().x() == 0.0);
-  REQUIRE(p.GetPosition().y() == 0.0);
+  // Move half the world size, again.
+  p.SetPosition(p.GetPosition() + halfworld_xy);
+  REQUIRE(p.GetPosition().GetX() == POS2D_XWRAP);
+  REQUIRE(p.GetPosition().GetY() == POS2D_YWRAP);
   
   // Create a unit movement direction in the x and y directions.
-  sfm::dir2d unit_xy(1.0, 1.0);
+  sfm::Vec2d unit_xy(1.0, 1.0);
   
-  // Move half the world size, and test the result.
-  p.Move(halfworld_xy);
-  REQUIRE(p.GetPosition().x() == POS2D_XWRAP / 2.0);
-  REQUIRE(p.GetPosition().y() == POS2D_YWRAP / 2.0);
+  // Move a unit move to test wrapping.
+  p.SetPosition(p.GetPosition() + unit_xy);
+  REQUIRE(p.GetPosition().GetX() == 1.0);
+  REQUIRE(p.GetPosition().GetY() == 1.0);
 
-  // Move a unit move, and test the result.
-  p.Move(unit_xy);
-  REQUIRE(p.GetPosition().x() == POS2D_XWRAP / 2.0 + 1.0);
-  REQUIRE(p.GetPosition().y() == POS2D_YWRAP / 2.0 + 1.0);
-
-  // Move half the world size, again, and test the pedestrian wraps to (1.0, 1.0).
-  p.Move(halfworld_xy);
-  REQUIRE(p.GetPosition().x() == 1.0);
-  REQUIRE(p.GetPosition().y() == 1.0);
-  */
 }
 
 

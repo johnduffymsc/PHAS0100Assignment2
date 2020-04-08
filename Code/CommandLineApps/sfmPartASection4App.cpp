@@ -43,10 +43,8 @@ int main(int argc, char** argv)
   for (auto t = 0.0; t < finish_time_s; t += dt) {
     // Pedestrians loop.
     for (auto p : pedestrians) {
-      // Calculate resultant force.
-      sfm::dir2d resultant_force = p.PedestrianDestinationAttractiveForce();
       // Update pedestrian's velocity.
-      p.SetVelocity(p.GetVelocity() + ResultantForce(p) * dt);
+      p.SetVelocity(p.GetVelocity() + sfm::ResultantForce(p, pedestrians) * dt); // TODO remove p from pedestrians and use vector of shared pointers.
       // Update pedestrian's position.
       p.SetPosition(p.GetPosition() + p.GetVelocity() * dt);
 

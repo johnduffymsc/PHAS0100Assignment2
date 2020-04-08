@@ -15,35 +15,35 @@
 #ifndef sfmPedestrian_h
 #define sfmPedestrian_h
 
-#include "sfmMoverI.h"
-#include "sfmBasicTypes.h"
+#include "sfmTypes.h"
 
-
-// A class that implements a pedestrian.
 
 namespace sfm {
 
-  class Pedestrian : public MoverI {
+  class Pedestrian {
   public:
-    Pedestrian(pos2d &origin, pos2d &destination, double &desired_speed, double &relaxation_time);
+    Pedestrian(const Pos2d origin,
+	       const Pos2d destination,
+	       const double desired_speed,
+	       const double relaxation_time);
 
     ~Pedestrian();
 
-    void move(dir2d &direction);
+    Vec2d GetVelocity(void);
+    Pos2d GetPosition(void);
 
-    dir2d get_velocity(void);
-    
-    pos2d get_position(void);
-    
-    void print_velocity_and_position();
+    void SetVelocity(const Vec2d velocity);
+    void SetPosition(const Pos2d position);
 
+    //Vec2d PedestrianDestinationAttractiveForce(void);
+    
   private:
-    pos2d origin;
-    pos2d destination;
-    double desired_speed;
-    double relaxation_time;
-    dir2d velocity;
-    pos2d position;
+    const Pos2d origin;
+    const Pos2d destination;
+    const double desired_speed;
+    const double relaxation_time;
+    Vec2d velocity;
+    Pos2d position;
   };
 
 } // end namespace

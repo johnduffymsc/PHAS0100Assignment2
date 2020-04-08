@@ -12,42 +12,51 @@
 
 =============================================================================*/
 
-#include "sfmBasicTypes.h"
+#include "sfmTypes.h"
 #include "sfmPedestrian.h"
 
 #include <iostream>
 
 
-// A class that implements a pedestrian.
-
 namespace sfm {
 
-  Pedestrian::Pedestrian(pos2d &origin, pos2d &destination, double &desired_speed, double &relaxation_time)
+  Pedestrian::Pedestrian(const Pos2d origin,
+			 const Pos2d destination,
+			 const double desired_speed,
+			 const double relaxation_time)
     : origin{origin},
       destination{destination},
       desired_speed{desired_speed},
       relaxation_time{relaxation_time},
-      velocity{(origin - destination) * (1.0 / (origin - destination).length()) * desired_speed},
+      velocity{Vec2d()},
       position{origin}
   {}
 
   Pedestrian::~Pedestrian() {}
 
-  void Pedestrian::move(dir2d &direction) {
-    position = position + direction;
-  }
-
-  dir2d Pedestrian::get_velocity(void) {
+  Vec2d Pedestrian::GetVelocity(void) {
     return velocity;
   }
   
-  pos2d Pedestrian::get_position(void) {
+  Pos2d Pedestrian::GetPosition(void) {
     return position;
   }
 
-  void Pedestrian::print_velocity_and_position() {
-    //std::cout << velocity << " " << get_position().x() << " " << get_position().y() << std::endl;
-    ;
+  void Pedestrian::SetVelocity(const Vec2d velocity) {
+    this->velocity = velocity;
   }
+
+  void Pedestrian::SetPosition(const Pos2d position) {
+    this->position = position;
+  }
+
+  /*
+  Vec2d Pedestrian::PedestrianDestinationAttractiveForce(void) {
+    // Helbing & Molnar Equation 2.
+    Vec2d e {(destination - position) * (1.0 / (destination - position).length())};
+    Vec2d f {1.0 / relaxation_time * (desired_speed * e - velocity)};
+    return f;
+  }
+  */
 
 } // end namespace

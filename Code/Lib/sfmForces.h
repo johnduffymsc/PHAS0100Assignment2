@@ -12,21 +12,25 @@
 
 =============================================================================*/
 
-#ifndef sfmMoverI_h
-#define sfmMoverI_h
+#ifndef sfmForces_h
+#define sfmForces_h
 
 #include "sfmBasicTypes.h"
+#include "sfmPedestrian.h"
+
+#include <vector>
 
 
-// An interface class for all things that move, e.g. a pedestrian or vehicle.
+namespace sfm
+{
 
-namespace sfm {
+  //dir2d PedestrianPedestrianRepulsiveForce();
 
-  class MoverI {
-  public:
-    virtual void Move(dir2d &direction) = 0;
-  };
+  //dir2d ObstaclePedestrianRepulsiveForce();
 
-} // end namespace
+  
+  dir2d ResultantForce(Pedestrian p, std::vector<Pedestrian> others);
+  
+}
 
 #endif

@@ -10,18 +10,16 @@
 
   See LICENSE.txt in the top level directory for details.
 
+  Author: John Duffy
+
 =============================================================================*/
 
-#include "sfmBasicTypes.h"
+#include "sfmTypes.h"
 #include "sfmPedestrian.h"
 #include "sfmForces.h"
 
 
 namespace sfm {
-
-  dir2d PedestrianDestinationAttractiveForce(Pedestrian &p) {
-    return p.PedestrianDestinationAttractiveForce();
-  }
 
   //dir2d PedestrianPedestrianReplusiveForce()
   //{
@@ -41,8 +39,8 @@ namespace sfm {
   //return f;
   //}
 
-  dir2d ResultantForce(Pedestrian p, std::vector<Pedestrian> others) {
-    return PedestrianDestinationAttractiveForce(p); 
+  Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> pedestrians) {
+    return p.PedestrianDestinationAttractiveForce();
   }
 
 } // end namespace

@@ -13,7 +13,7 @@
 =============================================================================*/
 
 #include <sfmExceptionMacro.h>
-#include <sfmBasicTypes.h>
+#include <sfmTypes.h>
 #include <sfmPedestrian.h>
 
 #include <iostream>
@@ -23,16 +23,6 @@
 
 int main(int argc, char** argv)
 {
-  // Number of pedestrians to create at each end of the corridor.
-  int n {20};
-
-  // Initial configuration for all pedestrians.
-  double desired_speed {1.3};
-  double relaxation_time {0.5};
-  
-  // Empty vector of pedestrians.
-  std::vector<sfm::Pedestrian> pedestrians;
-
   // Create random y positions on the closed interval [0, POS2D_YWRAP].
   std::random_device rd;
   std::mt19937 gen(rd());
@@ -40,20 +30,30 @@ int main(int argc, char** argv)
   double b {std::nextafter(POS2D_YWRAP, std::numeric_limits<double>::max())}; // For closed interval.
   std::uniform_real_distribution<double> y(a, b);
 
-  // Add pedestrians starting at x = 0.
+  // Number of pedestrians to create at each end of the corridor.
+  int n {20};
+
+  // Common initial parameters for all pedestrians.
+  const double desired_speed {1.3};
+  const double relaxation_time {0.5};
+  
+  // Empty vector of pedestrians.
+  std::vector<sfm::Pedestrian> pedestrians;
+
+  // Add pedestrians with origin x = 0.0 and destination x = POS2D_XWRAP.
   for (auto i = 0; i < n; ++i) {
-    sfm::pos2d origin {0, y(gen)};
-    sfm::pos2d destination {POS2D_XWRAP - 0.1, y(gen)};
+    const sfm::Pos2d origin {0, y(gen)};
+    const sfm::Pos2d destination {POS2D_XWRAP, y(gen)};
     pedestrians.push_back(sfm::Pedestrian(origin,
 					  destination,
 					  desired_speed,
 					  relaxation_time));
   }
   
-  // Add pedestrians starting at x = POS2D_XWRAP.
+  // Add pedestrians with origin x = POS2D_XWRAP and destination x = 0.0.
   for (auto i = 0; i < n; ++i) {
-    sfm::pos2d origin {POS2D_XWRAP - 0.1, y(gen)};
-    sfm::pos2d destination {0.1, y(gen)};
+    const sfm::Pos2d origin {POS2D_XWRAP, y(gen)};
+    const sfm::Pos2d destination {0.0, y(gen)};
     pedestrians.push_back(sfm::Pedestrian(origin,
 					  destination,
 					  desired_speed,
@@ -62,7 +62,7 @@ int main(int argc, char** argv)
 
 
   for (auto p : pedestrians) {
-    std::cout << p.GetPosition().x() << " " << p.GetPosition().y() << std::endl;
+    std::cout << p.GetPosition().GetX() << " " << p.GetPosition().GetY() << std::endl;
   }
 
   

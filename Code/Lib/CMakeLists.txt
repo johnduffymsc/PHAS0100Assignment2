@@ -20,7 +20,7 @@ set(PHAS0100ASSIGNMENT2_LIBRARY_SRCS
   sfmException.cpp
   sfmTypes.cpp
   sfmPedestrian.cpp
-  #sfmForces.cpp
+  sfmForces.cpp
 )
 
 set(PHAS0100ASSIGNMENT2_LIBRARY_HDRS

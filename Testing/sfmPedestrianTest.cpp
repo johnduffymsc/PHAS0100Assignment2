@@ -10,6 +10,8 @@
 
   See LICENSE.txt in the top level directory for details.
 
+  Author: John Duffy
+
 =============================================================================*/
 
 #include "catch.hpp"
@@ -99,6 +101,33 @@ TEST_CASE("Pedestrian movement, including wrapping", "[pedestrian]" ) {
   p.SetPosition(p.GetPosition() + unit_xy);
   REQUIRE(p.GetPosition().GetX() == 1.0);
   REQUIRE(p.GetPosition().GetY() == 1.0);
+
+}
+
+TEST_CASE("Pedestrian velocity/position setters/getters", "[pedestrian]" ) {
+
+  // Create a pedestrian at the origin.
+  const sfm::Pos2d origin;
+  const sfm::Pos2d destination(POS2D_XWRAP, POS2D_YWRAP);
+  const double desired_speed {1.0};
+  double relaxation_time {0.5};
+  sfm::Pedestrian pedestrian(origin, destination, desired_speed, relaxation_time);
+
+  // Create a velocity vector.
+  sfm::Vec2d vec2d(2.0, 2.0);
+
+  // Setter/Getter.
+  pedestrian.SetVelocity(vec2d);
+  REQUIRE(pedestrian.GetVelocity().GetXLength() == 2.0);
+  REQUIRE(pedestrian.GetVelocity().GetYLength() == 2.0);
+
+  // Create a position.
+  sfm::Pos2d pos2d(4.0, 4.0);
+
+  // Setter/Getter.
+  pedestrian.SetPosition(pos2d);
+  REQUIRE(pedestrian.GetPosition().GetX() == 4.0);
+  REQUIRE(pedestrian.GetPosition().GetY() == 4.0);
 
 }
 

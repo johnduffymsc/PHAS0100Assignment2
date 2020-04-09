@@ -22,7 +22,7 @@
 namespace sfm { // Start namespace.
 
   //
-  // Class Vec2d.
+  // Class Vec2d - Vectors are defined by a (x_length, y_length) pair.
   //
   
   Vec2d::Vec2d(void) : x_length{0.0}, y_length{0.0} {};
@@ -33,6 +33,10 @@ namespace sfm { // Start namespace.
 
   Vec2d Vec2d::operator+(const Vec2d v) {
     return Vec2d(x_length + v.x_length, y_length + v.y_length);
+  }
+
+  Vec2d Vec2d::operator-(const Vec2d v) {
+    return Vec2d(x_length + v.x_length, y_length + v.y_length) * -1.0;
   }
 
   Vec2d Vec2d::operator*(const double scaling_factor) {
@@ -52,7 +56,7 @@ namespace sfm { // Start namespace.
   }
 
   //
-  // Class Pos2d.
+  // Class Pos2d - Positions are defined by a (x, y) pair.
   //
   
   Pos2d::Pos2d(void) : x{0.0}, y{0.0} {};
@@ -65,15 +69,15 @@ namespace sfm { // Start namespace.
     return Pos2d(Wrap(x + v.GetXLength(), POS2D_XWRAP), Wrap(y + v.GetYLength(), POS2D_YWRAP));
   }
 
-  Vec2d Pos2d::operator-(const Pos2d p) {
+  Vec2d Pos2d::operator-(const Pos2d p) const {
     return Vec2d(p.x - x, p.y - y);
   }
 
-  double Pos2d::GetX() const {
+  double Pos2d::GetX(void) const {
     return x;
   }
 
-  double Pos2d::GetY() const {
+  double Pos2d::GetY(void) const {
     return y;
   }
 

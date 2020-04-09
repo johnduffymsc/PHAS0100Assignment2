@@ -10,12 +10,14 @@
 
   See LICENSE.txt in the top level directory for details.
 
+  Author: John Duffy
+
 =============================================================================*/
 
 #ifndef sfmForces_h
 #define sfmForces_h
 
-#include "sfmBasicTypes.h"
+#include "sfmTypes.h"
 #include "sfmPedestrian.h"
 
 #include <vector>
@@ -28,8 +30,7 @@ namespace sfm
 
   //dir2d ObstaclePedestrianRepulsiveForce();
 
-  
-  dir2d ResultantForce(Pedestrian p, std::vector<Pedestrian> others);
+  Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> pedestrians);
   
 }
 

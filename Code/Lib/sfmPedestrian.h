@@ -10,6 +10,8 @@
 
   See LICENSE.txt in the top level directory for details.
 
+  Author: John Duffy
+
 =============================================================================*/
 
 #ifndef sfmPedestrian_h
@@ -29,13 +31,13 @@ namespace sfm {
 
     ~Pedestrian();
 
-    Vec2d GetVelocity(void);
-    Pos2d GetPosition(void);
+    Vec2d GetVelocity(void) const;
+    Pos2d GetPosition(void) const;
 
     void SetVelocity(const Vec2d velocity);
     void SetPosition(const Pos2d position);
 
-    //Vec2d PedestrianDestinationAttractiveForce(void);
+    Vec2d PedestrianDestinationAttractiveForce(void);
     
   private:
     const Pos2d origin;

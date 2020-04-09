@@ -28,6 +28,8 @@
 
 namespace sfm { // Start namespace.
 
+  // TODO: Implement the XPPair class as a base class for Vec2d and Pos2d.
+  
   /*
   //
   // Class XYPair.
@@ -49,7 +51,7 @@ namespace sfm { // Start namespace.
   */
   
   //
-  // Class Vec2d.
+  // Class Vec2d - Vectors are defined by a (x_length, y_length) pair.
   //
   
   class Vec2d {
@@ -61,8 +63,9 @@ namespace sfm { // Start namespace.
     ~Vec2d();
     // Parameter value methods.
     Vec2d operator+(const Vec2d v);
+    Vec2d operator-(const Vec2d v);
     Vec2d operator*(const double scaling_factor);
-    double Length();
+    double Length(void);
     double GetXLength(void) const;
     double GetYLength(void) const;
   private:
@@ -71,7 +74,7 @@ namespace sfm { // Start namespace.
   };
     
   //
-  // Class Pos2d.
+  // Class Pos2d - Positions are defined by a (x, y) pair.
   //
   
   class Pos2d {
@@ -83,9 +86,9 @@ namespace sfm { // Start namespace.
     ~Pos2d();
     // Parameter value methods.
     Pos2d operator+(const Vec2d v);
-    Vec2d operator-(const Pos2d p);
-    double GetX() const;
-    double GetY() const;
+    Vec2d operator-(const Pos2d p) const;
+    double GetX(void) const;
+    double GetY(void) const;
   private:
     static double Wrap(const double z, const double max_z); // Recursive method!
     double x;

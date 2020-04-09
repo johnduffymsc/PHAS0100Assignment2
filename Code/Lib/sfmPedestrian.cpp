@@ -10,6 +10,8 @@
 
   See LICENSE.txt in the top level directory for details.
 
+  Author: John Duffy
+
 =============================================================================*/
 
 #include "sfmTypes.h"
@@ -34,29 +36,26 @@ namespace sfm {
 
   Pedestrian::~Pedestrian() {}
 
-  Vec2d Pedestrian::GetVelocity(void) {
+  Vec2d Pedestrian::GetVelocity(void) const {
     return velocity;
   }
   
-  Pos2d Pedestrian::GetPosition(void) {
+  Pos2d Pedestrian::GetPosition(void) const {
     return position;
   }
 
-  void Pedestrian::SetVelocity(const Vec2d velocity) {
-    this->velocity = velocity;
+  void Pedestrian::SetVelocity(const Vec2d v) {
+    velocity = v;
   }
 
-  void Pedestrian::SetPosition(const Pos2d position) {
-    this->position = position;
+  void Pedestrian::SetPosition(const Pos2d p) {
+    position = p;
   }
 
-  /*
   Vec2d Pedestrian::PedestrianDestinationAttractiveForce(void) {
     // Helbing & Molnar Equation 2.
-    Vec2d e {(destination - position) * (1.0 / (destination - position).length())};
-    Vec2d f {1.0 / relaxation_time * (desired_speed * e - velocity)};
-    return f;
+    Vec2d direction {(destination - position) * (1.0 / (destination - position).Length())};
+    return Vec2d {(direction * desired_speed - velocity) * (1.0 / relaxation_time)};
   }
-  */
 
 } // end namespace

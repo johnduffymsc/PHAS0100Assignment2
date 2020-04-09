@@ -65,7 +65,7 @@ namespace sfm { // Start namespace.
     Vec2d operator+(const Vec2d v);
     Vec2d operator-(const Vec2d v);
     Vec2d operator*(const double scaling_factor);
-    double Length(void);
+    double Length(void) const;
     double GetXLength(void) const;
     double GetYLength(void) const;
   private:

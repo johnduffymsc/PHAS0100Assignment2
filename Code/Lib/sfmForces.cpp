@@ -18,29 +18,41 @@
 #include "sfmPedestrian.h"
 #include "sfmForces.h"
 
+#include <cmath>
+#include <vector>
+
 
 namespace sfm {
 
-  //dir2d PedestrianPedestrianReplusiveForce()
-  //{
-  //dir2d f;
-  //return f;
-  //}
+  Vec2d PedestrianPedestrianRepulsiveForce(Pedestrian &p, std::vector<Pedestrian> other_ps) {
+    return Vec2d();
+  }
 
-  //dir2d ObstaclePedestrianRepulsiveForce()
-  //{
-  //dir2d f;
-  //return f;
-  //}
+  Vec2d Grad(const Vec2d r) {
+    //Vec2d grad {r * (1.0 / r.Length())};
+    return Vec2d {r};
+  }
 
-  //dir2d ResultantForce()
-  //{
-  //dir2d f;
-  //return f;
-  //}
+  double U(const double r_length) {
+    // Helbing & Molnar Equation 13.
+    double U0 = 10.0;
+    double R = 0.2;
+    return -1.0 / R * U0 * exp(-1.0 * r_length / R);
+  }    
+    
+  Vec2d BorderPedestrianRepulsiveForce(Pedestrian &p) {
+    // Helbing & Molnar Equation 5.
+    Vec2d r_top {p.GetPosition() - Pos2d(p.GetPosition().GetX(), POS2D_YWRAP)};
+    Vec2d r_bottom {p.GetPosition() - Pos2d(p.GetPosition().GetX(), 0.0)};
+    // Vector sum of top and bottom boundary forces.
+    return Vec2d {Grad(r_bottom) * U(r_bottom.Length()) * -1.0 + Grad(r_top) * U(r_top.Length()) * -1.0};
+  }
 
-  Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> pedestrians) {
-    return p.PedestrianDestinationAttractiveForce();
+  Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> other_ps) {
+    return
+      p.PedestrianDestinationAttractiveForce() +
+      PedestrianPedestrianRepulsiveForce(p, other_ps) +
+      BorderPedestrianRepulsiveForce(p);
   }
 
 } // end namespace

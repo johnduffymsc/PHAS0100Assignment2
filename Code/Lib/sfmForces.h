@@ -26,12 +26,16 @@
 namespace sfm
 {
 
-  //dir2d PedestrianPedestrianRepulsiveForce();
+  Vec2d PedestrianPedestrianRepulsiveForce(Pedestrian &p, std::vector<Pedestrian> other_ps);
 
-  //dir2d ObstaclePedestrianRepulsiveForce();
+  Vec2d Grad(const Vec2d r);
 
-  Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> pedestrians);
-  
-}
+  double U(const double r_length);
+    
+  Vec2d BorderPedestrianRepulsiveForce(Pedestrian &p);
+
+  Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> other_ps);
+
+} // End namespace.
 
 #endif

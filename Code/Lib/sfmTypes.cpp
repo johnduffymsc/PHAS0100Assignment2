@@ -43,7 +43,7 @@ namespace sfm { // Start namespace.
     return Vec2d(x_length * scaling_factor, y_length * scaling_factor);
   }
 
-  double Vec2d::Length(void) {
+  double Vec2d::Length(void) const {
     return std::sqrt(x_length * x_length + y_length * y_length);
   }
 

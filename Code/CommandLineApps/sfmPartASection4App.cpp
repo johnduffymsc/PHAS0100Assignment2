@@ -29,8 +29,8 @@ int main(int argc, char** argv)
   int n {3};
   
   // Common initial parameters for pedestrians.
-  const double desired_speed {1.3};
-  const double relaxation_time {0.5};
+  double desired_speed {1.3};
+  double relaxation_time {0.5};
 
   /*
   // Create a vector of pedestrians.
@@ -45,19 +45,19 @@ int main(int argc, char** argv)
   // Create a vector of pedestrians.
   std::vector<sfm::Pedestrian> ps;
   ps.push_back(sfm::Pedestrian(sfm::Pos2d(0.0, 1.0), sfm::Pos2d(POS2D_XWRAP, 1.0), desired_speed, relaxation_time));
-  ps.push_back(sfm::Pedestrian(sfm::Pos2d(0.0, 9.0), sfm::Pos2d(POS2D_XWRAP, 9.0), desired_speed, relaxation_time));
+  ps.push_back(sfm::Pedestrian(sfm::Pos2d(POS2D_XWRAP, 5.0), sfm::Pos2d(0.0, 5.0), desired_speed, relaxation_time));
 
   // Print velocities and positions at t = 0.0.
   std::cout << 0.0;
-  for (auto const &p : ps) {
+  for (auto &p : ps) {
     std::cout << " " << p.GetVelocity().GetXLength() << " " << p.GetVelocity().GetYLength();
     std::cout << " " << p.GetPosition().GetX() << " " << p.GetPosition().GetY();
   }
   std::cout << std::endl;
 
   // Time loop.
-  double finish_time_s {40.0};
-  double dt {0.1};
+  double finish_time_s {20.0};
+  double dt {0.25};
   for (auto t = dt; t < finish_time_s + dt; t += dt) {
     std::cout << t;
     // Pedestrians loop.
@@ -66,7 +66,7 @@ int main(int argc, char** argv)
       std::vector<sfm::Pedestrian> other_ps = ps;
       other_ps.erase(other_ps.begin() + i);
       // Update each pedestrian's velocity.
-      ps[i].SetVelocity(ps[i].GetVelocity() + (sfm::ResultantForce(ps[i], other_ps) * dt));
+      ps[i].SetVelocity(ps[i].GetVelocity() + (sfm::ResultantForce(ps[i], other_ps, dt) * dt));
       // Update each pedestrian's position.
       ps[i].SetPosition(ps[i].GetPosition() + (ps[i].GetVelocity() * dt));
       // Print updated velocities and positions at time t.

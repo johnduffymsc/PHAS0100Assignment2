@@ -24,18 +24,17 @@ namespace sfm {
 
   class Pedestrian {
   public:
-    Pedestrian(const Pos2d origin,
-	       const Pos2d destination,
-	       const double desired_speed,
-	       const double relaxation_time);
+    Pedestrian(Pos2d origin, Pos2d destination, double desired_speed, double relaxation_time);
 
     ~Pedestrian();
 
-    Vec2d GetVelocity(void) const;
-    Pos2d GetPosition(void) const;
+    Pos2d GetOrigin(void);
+    Pos2d GetDestination(void);
+    Vec2d GetVelocity(void);
+    Pos2d GetPosition(void);
 
-    void SetVelocity(const Vec2d velocity);
-    void SetPosition(const Pos2d position);
+    void SetVelocity(Vec2d velocity);
+    void SetPosition(Pos2d position);
 
     Vec2d PedestrianDestinationForce(void);
     

@@ -58,16 +58,16 @@ namespace sfm { // Start namespace.
   public:
     // Constructors.
     Vec2d();
-    Vec2d(const double x_length, const double y_length);
+    Vec2d(double x_length, double y_length);
     // Destructor.
     ~Vec2d();
     // Parameter value methods.
-    Vec2d operator+(const Vec2d v);
-    Vec2d operator-(const Vec2d v);
-    Vec2d operator*(const double scaling_factor);
-    double Length(void) const;
-    double GetXLength(void) const;
-    double GetYLength(void) const;
+    Vec2d operator+(Vec2d v);
+    Vec2d operator-(Vec2d v);
+    Vec2d operator*(double scaling_factor);
+    double Length(void);
+    double GetXLength(void);
+    double GetYLength(void);
   private:
     double x_length;
     double y_length;
@@ -81,16 +81,16 @@ namespace sfm { // Start namespace.
   public:
     // Constructors.
     Pos2d();
-    Pos2d(const double x, const double y);
+    Pos2d(double x, double y);
     // Destructor.
     ~Pos2d();
     // Parameter value methods.
-    Pos2d operator+(const Vec2d v);
-    Vec2d operator-(const Pos2d p) const;
-    double GetX(void) const;
-    double GetY(void) const;
+    Pos2d operator+(Vec2d v);
+    Vec2d operator-(Pos2d p);
+    double GetX(void);
+    double GetY(void);
   private:
-    static double Wrap(const double z, const double max_z); // Recursive method!
+    static double Wrap(double z, double max_z); // Recursive method!
     double x;
     double y;
   };

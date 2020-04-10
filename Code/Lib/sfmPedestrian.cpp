@@ -22,10 +22,7 @@
 
 namespace sfm {
 
-  Pedestrian::Pedestrian(const Pos2d origin,
-			 const Pos2d destination,
-			 const double desired_speed,
-			 const double relaxation_time)
+  Pedestrian::Pedestrian(Pos2d origin, Pos2d destination, double desired_speed, double relaxation_time)
     : origin{origin},
       destination{destination},
       desired_speed{desired_speed},
@@ -36,19 +33,27 @@ namespace sfm {
 
   Pedestrian::~Pedestrian() {}
 
-  Vec2d Pedestrian::GetVelocity(void) const {
+  Pos2d Pedestrian::GetOrigin(void) {
+    return origin;
+  }
+
+  Pos2d Pedestrian::GetDestination(void) {
+    return destination;
+  }
+
+  Vec2d Pedestrian::GetVelocity(void)  {
     return velocity;
   }
   
-  Pos2d Pedestrian::GetPosition(void) const {
+  Pos2d Pedestrian::GetPosition(void) {
     return position;
   }
 
-  void Pedestrian::SetVelocity(const Vec2d v) {
+  void Pedestrian::SetVelocity(Vec2d v) {
     velocity = v;
   }
 
-  void Pedestrian::SetPosition(const Pos2d p) {
+  void Pedestrian::SetPosition(Pos2d p) {
     position = p;
   }
 

@@ -25,11 +25,13 @@
 
 namespace sfm
 {
-  Vec2d PedestrianPedestrianForce(const Vec2d r);
+  double B(Vec2d r, double v, Vec2d e, double dt);
 
-  Vec2d BorderPedestrianForce(const Vec2d r);
+  Vec2d PedestrianPedestrianForce(Pedestrian &p, Pedestrian &o, double dt);
 
-  Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> &other_ps);
+  Vec2d PedestrianBorderForce(Pedestrian &p, double y_border);
+
+  Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> &other_ps, double dt);
 
 } // End namespace.
 

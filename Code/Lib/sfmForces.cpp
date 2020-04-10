@@ -24,35 +24,25 @@
 
 namespace sfm {
 
-  Vec2d PedestrianPedestrianRepulsiveForce(Pedestrian &p, std::vector<Pedestrian> other_ps) {
+  Vec2d PedestrianPedestrianForce(const Vec2d r) {
     return Vec2d();
   }
 
-  Vec2d Grad(const Vec2d r) {
-    //Vec2d grad {r * (1.0 / r.Length())};
-    return Vec2d {r};
-  }
-
-  double U(const double r_length) {
-    // Helbing & Molnar Equation 13.
+  Vec2d BorderPedestrianForce(const Vec2d r) {
+    // Helbing & Molnar Equation 5.
     double U0 = 10.0;
     double R = 0.2;
-    return -1.0 / R * U0 * exp(-1.0 * r_length / R);
+    return Vec2d(0, -1.0 / R * U0 * exp(-1.0 * r.Length() / R)) * -1.0;
   }    
     
-  Vec2d BorderPedestrianRepulsiveForce(Pedestrian &p) {
-    // Helbing & Molnar Equation 5.
-    Vec2d r_top {p.GetPosition() - Pos2d(p.GetPosition().GetX(), POS2D_YWRAP)};
-    Vec2d r_bottom {p.GetPosition() - Pos2d(p.GetPosition().GetX(), 0.0)};
-    // Vector sum of top and bottom boundary forces.
-    return Vec2d {Grad(r_bottom) * U(r_bottom.Length()) * -1.0 + Grad(r_top) * U(r_top.Length()) * -1.0};
-  }
-
-  Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> other_ps) {
-    return
-      p.PedestrianDestinationAttractiveForce() +
-      PedestrianPedestrianRepulsiveForce(p, other_ps) +
-      BorderPedestrianRepulsiveForce(p);
+  Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> &other_ps) {
+    Vec2d f {p.PedestrianDestinationForce()};
+    for (auto o : other_ps) {
+      f = f + PedestrianPedestrianForce(p.GetPosition() - o.GetPosition());
+    }
+    f = f + BorderPedestrianForce(p.GetPosition() - Pos2d(p.GetPosition().GetX(), 0.0));
+    f = f + BorderPedestrianForce(p.GetPosition() - Pos2d(p.GetPosition().GetX(), POS2D_YWRAP));
+    return f;
   }
 
 } // end namespace

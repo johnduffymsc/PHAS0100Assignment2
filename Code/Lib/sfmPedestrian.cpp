@@ -52,7 +52,7 @@ namespace sfm {
     position = p;
   }
 
-  Vec2d Pedestrian::PedestrianDestinationAttractiveForce(void) {
+  Vec2d Pedestrian::PedestrianDestinationForce(void) {
     // Helbing & Molnar Equation 2.
     Vec2d direction {(destination - position) * (1.0 / (destination - position).Length())};
     return Vec2d {(direction * desired_speed - velocity) * (1.0 / relaxation_time)};

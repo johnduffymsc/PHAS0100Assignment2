@@ -25,27 +25,14 @@
 
 int main(int argc, char** argv)
 {
-  // Number of pedestrians to create.
-  int n {3};
-  
-  // Common initial parameters for pedestrians.
+  // Create a vector of pedestrians.
+  std::vector<sfm::Pedestrian> ps;
   double desired_speed {1.3};
   double relaxation_time {0.5};
-
-  /*
-  // Create a vector of pedestrians.
-  std::vector<sfm::Pedestrian> ps;
-  for (auto i = 0; i < n; ++i) {
-    const sfm::Pos2d origin(0.0, i + 1.0);
-    const sfm::Pos2d destination(POS2D_XWRAP, i + 1.0);
-    ps.push_back(sfm::Pedestrian(origin, destination, desired_speed, relaxation_time));
-  }
-  */
-
-  // Create a vector of pedestrians.
-  std::vector<sfm::Pedestrian> ps;
   ps.push_back(sfm::Pedestrian(sfm::Pos2d(0.0, 1.0), sfm::Pos2d(POS2D_XWRAP, 1.0), desired_speed, relaxation_time));
+  ps.push_back(sfm::Pedestrian(sfm::Pos2d(0.0, 9.0), sfm::Pos2d(POS2D_XWRAP, 9.0), desired_speed, relaxation_time));
   ps.push_back(sfm::Pedestrian(sfm::Pos2d(POS2D_XWRAP, 5.0), sfm::Pos2d(0.0, 5.0), desired_speed, relaxation_time));
+  ps.push_back(sfm::Pedestrian(sfm::Pos2d(0.0, 5.0), sfm::Pos2d(POS2D_XWRAP, 5.0), desired_speed, relaxation_time));
 
   // Print velocities and positions at t = 0.0.
   std::cout << 0.0;
@@ -56,7 +43,7 @@ int main(int argc, char** argv)
   std::cout << std::endl;
 
   // Time loop.
-  double finish_time_s {20.0};
+  double finish_time_s {30.0};
   double dt {0.25};
   for (auto t = dt; t < finish_time_s + dt; t += dt) {
     std::cout << t;
@@ -78,30 +65,3 @@ int main(int argc, char** argv)
 
   return EXIT_SUCCESS;
 }
-
-
-  /*
-  int returnStatus = EXIT_FAILURE;
-
-  try
-  {
-
-    Eigen::MatrixXd m(2,2);
-    std::cout << "Printing 2x2 Eigen::MatrixXd ..." << std::endl << m << std::endl;
-
-    std::cout << "Calculating ... " << sfm::MyFirstAddFunction(1, 2) << std::endl;
-
-    returnStatus = EXIT_SUCCESS;
-  }
-  catch (sfm::Exception& e)
-  {
-    std::cerr << "Caught sfm::Exception: " << e.GetDescription() << std::endl;
-  }
-  catch (std::exception& e)
-  {
-    std::cerr << "Caught std::exception: " << e.what() << std::endl;
-  }
-
-  return returnStatus;
-  */
-

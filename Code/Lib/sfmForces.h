@@ -29,7 +29,7 @@ namespace sfm
 
   Vec2d PedestrianPedestrianForce(Pedestrian &p, Pedestrian &o, double dt);
 
-  Vec2d PedestrianBorderForce(Pedestrian &p, double y_border);
+  Vec2d PedestrianBorderForce(Pedestrian &p, double y);
 
   Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> &other_ps, double dt);
 

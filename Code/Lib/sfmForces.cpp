@@ -48,7 +48,7 @@ namespace sfm {
     
     return direction * GradV(b());
     */
-    return Vec2d;
+    return Vec2d();
   }
 
   double GradU(Vec2d r) {
@@ -57,11 +57,12 @@ namespace sfm {
     return 1.0 / R * U0 * exp(-1.0 * r.Length() / R);
   }
 	   
-  Vec2d PedestrianBorderForce(Pedestrian &p, double y_border) {
-    Vec2d direction {}
-    return direction * GradU(r);
-  }    
-    
+  Vec2d PedestrianBorderForce(Pedestrian &p, double y) {
+    Vec2d r{p.GetPosition() - Pos2d(p.GetPosition().GetX(), y)};
+    Vec2d direction {r * (1.0 / r.Length())};
+    return direction * GradU(r) * -1.0;
+  }
+ 
   Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> &other_ps, double dt) {
     Vec2d f {p.PedestrianDestinationForce()};
     for (auto o : other_ps) {

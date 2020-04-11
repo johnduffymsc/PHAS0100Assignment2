@@ -24,43 +24,35 @@
 
 namespace sfm {
 
-  /*
-  double b(Vec2d r, double v, Vec2d e, double dt) {
+  double B(Vec2d r, Vec2d e, double v, double dt) {
     return 0.5 * std::sqrt(pow(r.Length() + (r - e * v * dt).Length(), 2.0) - pow(v * dt, 2.0));
   }
 
-  double V(double b) {
-    return 0.0;
-  }
-  */
-  
-  Vec2d PedestrianPedestrianForce(Pedestrian &p, Pedestrian &o, double dt) {
-    /*
-    double V0 {2.1}
+  double GradV(double b) {
+    double V0 {2.1};
     double Sigma {0.3};
-    double b {B(p.GetPosition() - o.GetPosition(),
-		o.GetVelocity().Length(),
-		(o.GetDestination() - o.GetPosition()) * (1.0 / (o.GetDestination() - o.GetPosition()).Length()),
-		dt)};
-    Vec2d f = -1.0 * -1.0 * b / Sigma * V0 * exp(-1.0 * b / Sigma);
-
-    Vec2d direction {}
-    
-    return direction * GradV(b());
-    */
-    return Vec2d();
+    return -1.0 * b / Sigma * V0 * exp(-1.0 * b / Sigma);
+  }
+	   
+  Vec2d PedestrianPedestrianForce(Pedestrian &p, Pedestrian &o, double dt) {
+    Vec2d r {p.GetPosition() - o.GetPosition()};
+    Vec2d e {(o.GetDestination() - o.GetPosition()) * (1.0 / (o.GetDestination() - o.GetPosition()).Length())};
+    double v {o.GetVelocity().Length()};
+    double b {B(r, e, v, dt)};
+    Vec2d direction {r * (1.0 / r.Length())};
+    return direction * GradV(b);
   }
 
   double GradU(Vec2d r) {
     double U0 {10.0};
     double R {0.2};
-    return 1.0 / R * U0 * exp(-1.0 * r.Length() / R);
+    return -1.0 / R * U0 * exp(-1.0 * r.Length() / R);
   }
 	   
   Vec2d PedestrianBorderForce(Pedestrian &p, double y) {
-    Vec2d r{p.GetPosition() - Pos2d(p.GetPosition().GetX(), y)};
+    Vec2d r {p.GetPosition() - Pos2d(p.GetPosition().GetX(), y)};
     Vec2d direction {r * (1.0 / r.Length())};
-    return direction * GradU(r) * -1.0;
+    return direction * GradU(r);
   }
  
   Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> &other_ps, double dt) {
@@ -68,12 +60,8 @@ namespace sfm {
     for (auto o : other_ps) {
       f = f + PedestrianPedestrianForce(p, o, dt);
     }
-    
-    //f = f + BorderPedestrianForce(p.GetPosition() - Pos2d(p.GetPosition().GetX(), 0.0));
-    //f = f + BorderPedestrianForce(p.GetPosition() - Pos2d(p.GetPosition().GetX(), POS2D_YWRAP));
     f = f + PedestrianBorderForce(p, 0.0);
     f = f + PedestrianBorderForce(p, POS2D_YWRAP);
-
     return f;
   }
 

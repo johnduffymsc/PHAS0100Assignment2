@@ -31,8 +31,8 @@ int main(int argc, char** argv)
   double relaxation_time {0.5};
   ps.push_back(sfm::Pedestrian(sfm::Pos2d(0.0, 1.0), sfm::Pos2d(POS2D_XWRAP, 1.0), desired_speed, relaxation_time));
   ps.push_back(sfm::Pedestrian(sfm::Pos2d(0.0, 9.0), sfm::Pos2d(POS2D_XWRAP, 9.0), desired_speed, relaxation_time));
-  ps.push_back(sfm::Pedestrian(sfm::Pos2d(POS2D_XWRAP, 5.0), sfm::Pos2d(0.0, 5.0), desired_speed, relaxation_time));
-  ps.push_back(sfm::Pedestrian(sfm::Pos2d(0.0, 5.0), sfm::Pos2d(POS2D_XWRAP, 5.0), desired_speed, relaxation_time));
+  ps.push_back(sfm::Pedestrian(sfm::Pos2d(POS2D_XWRAP, 4.9), sfm::Pos2d(0.0, 4.9), desired_speed, relaxation_time));
+  ps.push_back(sfm::Pedestrian(sfm::Pos2d(0.0, 5.1), sfm::Pos2d(POS2D_XWRAP, 5.1), desired_speed, relaxation_time));
 
   // Print velocities and positions at t = 0.0.
   std::cout << 0.0;
@@ -43,7 +43,7 @@ int main(int argc, char** argv)
   std::cout << std::endl;
 
   // Time loop.
-  double finish_time_s {30.0};
+  double finish_time_s {35.0};
   double dt {0.25};
   for (auto t = dt; t < finish_time_s + dt; t += dt) {
     std::cout << t;

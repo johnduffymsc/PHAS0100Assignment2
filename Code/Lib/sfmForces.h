@@ -25,7 +25,13 @@
 
 namespace sfm
 {
+  double B(Vec2d r, Vec2d e, double v, double dt);
+
+  double GradV(double b);
+	   
   Vec2d PedestrianPedestrianForce(Pedestrian &p, Pedestrian &o, double dt);
+
+  double GradU(Vec2d r);
 
   Vec2d PedestrianBorderForce(Pedestrian &p, double y);
 

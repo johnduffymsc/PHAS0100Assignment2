@@ -82,9 +82,12 @@ namespace sfm { // Start namespace.
   }
 
   double Pos2d::Wrap(double z, double max_z) { // Recursive method!
-    if (z / max_z > 1.0) {
+    if (z > max_z) {
       return Wrap(z - max_z, max_z);
     }
+    if (z < 0.0) {
+      return Wrap(z + max_z, max_z);
+    } 
     return z; 
   }
 

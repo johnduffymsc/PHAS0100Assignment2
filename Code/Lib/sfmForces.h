@@ -10,23 +10,33 @@
 
   See LICENSE.txt in the top level directory for details.
 
+  Author: John Duffy
+
 =============================================================================*/
 
-#ifndef sfmMoverI_h
-#define sfmMoverI_h
+#ifndef sfmForces_h
+#define sfmForces_h
 
-#include "sfmBasicTypes.h"
+#include "sfmTypes.h"
+#include "sfmPedestrian.h"
+
+#include <vector>
 
 
-// An interface class for all things that move, e.g. a pedestrian or vehicle.
+namespace sfm
+{
+  double B(Vec2d r, Vec2d e, double v, double dt);
 
-namespace sfm {
+  double GradV(double b);
+	   
+  Vec2d PedestrianPedestrianForce(Pedestrian &p, Pedestrian &o, double dt);
 
-  class MoverI {
-  public:
-    virtual void Move(dir2d &direction) = 0;
-  };
+  double GradU(Vec2d r);
 
-} // end namespace
+  Vec2d PedestrianBorderForce(Pedestrian &p, double y);
+
+  Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> &other_ps, double dt);
+
+} // End namespace.
 
 #endif

@@ -15,13 +15,19 @@
 set(PHAS0100ASSIGNMENT2_LIBRARY_NAME phas0100assignment2)
 
 set(PHAS0100ASSIGNMENT2_LIBRARY_SRCS
-  sfmBasicTypes.cpp
-  sfmMyFunctions.cpp
+  #sfmBasicTypes.cpp
+  #sfmMyFunctions.cpp
   sfmException.cpp
+  sfmTypes.cpp
+  sfmPedestrian.cpp
+  sfmForces.cpp
 )
 
 set(PHAS0100ASSIGNMENT2_LIBRARY_HDRS
   sfmExceptionMacro.h
+  #sfmMoverI.h
+  sfmPedestrian.h
+  #sfmForces.h
 )
 
 add_library(${PHAS0100ASSIGNMENT2_LIBRARY_NAME} ${PHAS0100ASSIGNMENT2_LIBRARY_HDRS} ${PHAS0100ASSIGNMENT2_LIBRARY_SRCS})

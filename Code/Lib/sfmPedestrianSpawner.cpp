@@ -25,47 +25,33 @@
 
 namespace sfm {
 
-  PedestrianSpawner::PedestrianSpawner(Pos2d origin, Pos2d destination, double desired_speed, double relaxation_time)
-    : origin{origin},
-      destination{destination},
-      desired_speed{desired_speed},
-      relaxation_time{relaxation_time},
-      velocity{Vec2d()},
-      position{origin}
-  {}
+  PedestrianSpawner::PedestrianSpawner() {}
 
   PedestrianSpawner::~PedestrianSpawner() {}
 
-  /*
-  Pos2d Pedestrian::GetOrigin(void) {
-    return origin;
+  std::vector<Pedestrian> PedestrianSpawner::Uniform(int n) {
+    return Factory(n, 0.0, POS2D_XWRAP, 0.0, POS2D_YWRAP);
+  }
+      
+  std::vector<Pedestrian> PedestrianSpawner::Distributed(int n, double x_start, double x_end, double y_start, double y_end) {
+    return Factory(n, x_start, x_end, y_start, y_end);
   }
 
-  Pos2d Pedestrian::GetDestination(void) {
-    return destination;
-  }
+  std::vector<Pedestrian> PedestrianSpawner::Factory(int n, double x_start, double x_end, double y_start, double y_end) {
 
-  Vec2d Pedestrian::GetVelocity(void)  {
-    return velocity;
-  }
-  
-  Pos2d Pedestrian::GetPosition(void) {
-    return position;
-  }
+  // Create random y positions on the closed interval [0, POS2D_YWRAP].
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  double a {0.0};
+  double b {std::nextafter(POS2D_YWRAP, std::numeric_limits<double>::max())}; // For closed interval.
+  std::uniform_real_distribution<double> y(a, b);
 
-  void Pedestrian::SetVelocity(Vec2d v) {
-    velocity = v;
-  }
 
-  void Pedestrian::SetPosition(Pos2d p) {
-    position = p;
-  }
 
-  Vec2d Pedestrian::PedestrianDestinationForce(void) {
-    // Helbing & Molnar Equation 2.
-    Vec2d direction {(destination - position) * (1.0 / (destination - position).Length())};
-    return Vec2d {(direction * desired_speed - velocity) * (1.0 / relaxation_time)};
+
+
+
+    ;
   }
-  */
 
 } // end namespace

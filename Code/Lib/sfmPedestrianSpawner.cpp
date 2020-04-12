@@ -26,10 +26,6 @@
 
 namespace sfm {
 
-  PedestrianSpawner::PedestrianSpawner() {}
-
-  PedestrianSpawner::~PedestrianSpawner() {}
-
   std::vector<std::shared_ptr<Pedestrian>> PedestrianSpawner::Uniform(int n,
 								      double x_target) {
     return Factory(n, 0.0, POS2D_XWRAP, 0.0, POS2D_YWRAP, x_target);

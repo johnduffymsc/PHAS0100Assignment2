@@ -30,27 +30,23 @@ namespace sfm {
 
   class PedestrianSpawner {
   public:
-    PedestrianSpawner();
-
-    ~PedestrianSpawner();
-
-    std::vector<std::shared_ptr<Pedestrian>> Uniform(int n,
-						     double x_target);
+    static std::vector<std::shared_ptr<Pedestrian>> Uniform(int n,
+							    double x_target);
       
-    std::vector<std::shared_ptr<Pedestrian>> Distributed(int n,
-							 double x_start,
-							 double x_end,
-							 double y_start,
-							 double y_end,
-							 double x_target);
+    static std::vector<std::shared_ptr<Pedestrian>> Distributed(int n,
+								double x_start,
+								double x_end,
+								double y_start,
+								double y_end,
+								double x_target);
 
   private:
-    std::vector<std::shared_ptr<Pedestrian>> Factory(int n,
-						     double x_start,
-						     double x_end,
-						     double y_start,
-						     double y_end,
-						     double x_target);
+    static std::vector<std::shared_ptr<Pedestrian>> Factory(int n,
+							    double x_start,
+							    double x_end,
+							    double y_start,
+							    double y_end,
+							    double x_target);
   };
 
 } // end namespace

@@ -24,13 +24,7 @@
 namespace sfm {
 
   DirectionalPedestrian::DirectionalPedestrian(Pos2d origin, Pos2d destination, double desired_speed, double relaxation_time)
-    : origin{origin},
-      destination{destination},
-      desired_speed{desired_speed},
-      relaxation_time{relaxation_time},
-      velocity{Vec2d()},
-      position{origin}
-  {}
+    : Pedestrian(origin, destination, desired_speed, relaxation_time) {}
 
   DirectionalPedestrian::~DirectionalPedestrian() {}
 

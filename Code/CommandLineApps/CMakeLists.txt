@@ -13,7 +13,7 @@
 #============================================================================*/
 
 set(_command_line_apps
-  #sfmPartASection4App
+  sfmPartASection4App
   #sfmPartASection5App
 )
 

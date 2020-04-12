@@ -20,7 +20,8 @@
 #include "sfmDirectionalPedestrian.h"
 #include "sfmPedestrianSpawner.h"
 
-#include <iostream>
+#include <random>
+#include <memory>
 
 
 namespace sfm {
@@ -29,29 +30,46 @@ namespace sfm {
 
   PedestrianSpawner::~PedestrianSpawner() {}
 
-  std::vector<Pedestrian> PedestrianSpawner::Uniform(int n) {
-    return Factory(n, 0.0, POS2D_XWRAP, 0.0, POS2D_YWRAP);
+  std::vector<std::shared_ptr<Pedestrian>> PedestrianSpawner::Uniform(int n,
+								      double x_target) {
+    return Factory(n, 0.0, POS2D_XWRAP, 0.0, POS2D_YWRAP, x_target);
   }
       
-  std::vector<Pedestrian> PedestrianSpawner::Distributed(int n, double x_start, double x_end, double y_start, double y_end) {
-    return Factory(n, x_start, x_end, y_start, y_end);
+  std::vector<std::shared_ptr<Pedestrian>> PedestrianSpawner::Distributed(int n,
+									  double x_start,
+									  double x_end,
+									  double y_start,
+									  double y_end,
+									  double x_target) {
+    return Factory(n, x_start, x_end, y_start, y_end, x_target);
   }
 
-  std::vector<Pedestrian> PedestrianSpawner::Factory(int n, double x_start, double x_end, double y_start, double y_end) {
-
-  // Create random y positions on the closed interval [0, POS2D_YWRAP].
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  double a {0.0};
-  double b {std::nextafter(POS2D_YWRAP, std::numeric_limits<double>::max())}; // For closed interval.
-  std::uniform_real_distribution<double> y(a, b);
-
-
-
-
-
-
-    ;
+  std::vector<std::shared_ptr<Pedestrian>> PedestrianSpawner::Factory(int n,
+								      double x_start,
+								      double x_end,
+								      double y_start,
+								      double y_end,
+								      double x_target) {
+    // Initialise random number generator.
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    // Create random x box positions on the closed interval [x_start, x_end].
+    std::uniform_real_distribution<double> x(x_start, std::nextafter(x_end, std::numeric_limits<double>::max()));
+    // Create random y box positions on the closed interval [y_start, y_end].
+    std::uniform_real_distribution<double> y(y_start, std::nextafter(y_end, std::numeric_limits<double>::max()));
+    // Create random y target positions on the closed interval [0.0, POS2D_YWRAP].
+    std::uniform_real_distribution<double> y_target(0.0, std::nextafter(POS2D_YWRAP, std::numeric_limits<double>::max()));
+    // Create n pedestrians.
+    std::vector<std::shared_ptr<Pedestrian>> ps;
+    for (auto i = 0; i < n; ++i) {
+      double desired_speed {1.3};
+      double relaxation_time {0.5};
+      ps.push_back(std::make_shared<TargetedPedestrian>(Pos2d(x(gen), y(gen)),
+							Pos2d(x_target, y_target(gen)),
+							desired_speed,
+							relaxation_time));
+    }
+    return ps;
   }
 
 } // end namespace

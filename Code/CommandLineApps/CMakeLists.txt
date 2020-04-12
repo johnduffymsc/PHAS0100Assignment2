@@ -13,9 +13,8 @@
 #============================================================================*/
 
 set(_command_line_apps
-  #sfmMyFirstApp
-  sfmPartASection4App
-  sfmPartASection5App
+  #sfmPartASection4App
+  #sfmPartASection5App
 )
 
 foreach(_app ${_command_line_apps})

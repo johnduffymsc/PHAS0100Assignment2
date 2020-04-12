@@ -14,20 +14,22 @@
 
 =============================================================================*/
 
-#ifndef sfmPedestrian_h
-#define sfmPedestrian_h
+#ifndef sfmTargetedPedestrian_h
+#define sfmTargetedPedestrian_h
 
 #include "sfmTypes.h"
+#include "sfmPedestrian.h"
 
 
 namespace sfm {
 
-  class Pedestrian {
+  class TargetedPedestrian : public Pedestrian {
   public:
-    Pedestrian(Pos2d origin, Pos2d destination, double desired_speed, double relaxation_time);
+    TargetedPedestrian(Pos2d origin, Pos2d destination, double desired_speed, double relaxation_time);
 
-    ~Pedestrian();
+    ~TargetedPedestrian();
 
+    /*
     Pos2d GetOrigin(void);
     Pos2d GetDestination(void);
     Vec2d GetVelocity(void);
@@ -37,16 +39,19 @@ namespace sfm {
     void SetPosition(Pos2d position);
 
     Vec2d PedestrianDestinationForce(void);
+    */
 
-    virtual Pos2d GetTarget() = 0;
+    Pos2d GetTarget(void);
     
-  protected:
+  private:
+    /*
     Pos2d origin;
     Pos2d destination;
     double desired_speed;
     double relaxation_time;
     Vec2d velocity;
     Pos2d position;
+    */
   };
 
 } // end namespace

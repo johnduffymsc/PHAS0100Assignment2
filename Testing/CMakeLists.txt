@@ -19,7 +19,7 @@ set(TEST_CASES
   #sfmCommandLineArgsTest
   #sfmBasicTest
   #sfmTypesTest
-  sfmPedestrianTest
+  #sfmPedestrianTest
 )
 
 foreach(_test_case ${TEST_CASES})

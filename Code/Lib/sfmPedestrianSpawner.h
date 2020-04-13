@@ -25,6 +25,7 @@
 #include "sfmDirectionalPedestrian.h"
 
 #include <memory>
+#include <string>
 #include <vector>
 
 
@@ -33,9 +34,11 @@ namespace sfm {
   class PedestrianSpawner {
   public:
     static std::vector<std::shared_ptr<Pedestrian>> Uniform(int n,
+							    std::string type,
 							    double x_target);
       
     static std::vector<std::shared_ptr<Pedestrian>> Distributed(int n,
+								std::string type,
 								double x_start,
 								double x_end,
 								double y_start,
@@ -44,6 +47,7 @@ namespace sfm {
 
   private:
     static std::vector<std::shared_ptr<Pedestrian>> Factory(int n,
+							    std::string type,
 							    double x_start,
 							    double x_end,
 							    double y_start,

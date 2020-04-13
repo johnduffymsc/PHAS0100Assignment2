@@ -23,6 +23,7 @@
 
 #include <iostream>
 #include <memory>
+#include <string>
 #include <vector>
 
 
@@ -34,13 +35,13 @@ int main(int argc, char** argv)
   // Empty vector of pedestrians.
   std::vector<std::shared_ptr<sfm::Pedestrian>> ps;
   
-  // Add TargetedPedestrian(s) in a box at the x = 0 end, targeting the x = POS2D_XWRAP end.
-  for (auto p : sfm::PedestrianSpawner::Distributed(n, 0.0, 2.0, 4.0, 6.0, POS2D_XWRAP)) {
+  // Add n TargetedPedestrian(s) in a box at the x = 0 end, targeting the x = POS2D_XWRAP end.
+  for (auto p : sfm::PedestrianSpawner::Distributed(n, "targeted", 0.0, 2.0, 4.0, 6.0, POS2D_XWRAP)) {
     ps.push_back(p);
   }
 
-  // Add DirectionalPedestrian(s) in a box at the x = POS2D_XWRAP end, targeting the x = 0 end.
-  for (auto p : sfm::PedestrianSpawner::Distributed(n, POS2D_XWRAP - 2.0, POS2D_XWRAP, 4.0, 6.0, 0.0)) {
+  // Add n DirectionalPedestrian(s) in a box at the x = POS2D_XWRAP end, targeting the x = 0 end.
+  for (auto p : sfm::PedestrianSpawner::Distributed(n, "directional", POS2D_XWRAP - 2.0, POS2D_XWRAP, 4.0, 6.0, 0.0)) {
     ps.push_back(p);
   }
   
@@ -55,17 +56,22 @@ int main(int argc, char** argv)
   // Time loop.
   double finish_time_s {15.0};
   double dt {0.25};
+  
   for (auto t = dt; t < finish_time_s + dt; t += dt) {
     std::cout << t;
     // Pedestrians loop.
     for (auto i = 0; i < ps.size(); ++i) { // Need index i!
+      
       // Create a vector of other pedestrians.
       std::vector<std::shared_ptr<sfm::Pedestrian>> other_ps = ps;
       other_ps.erase(other_ps.begin() + i);
+      
       // Update each pedestrian's velocity.
       ps[i]->SetVelocity(ps[i]->GetVelocity() + (sfm::ResultantForce(ps[i], other_ps, dt) * dt));
+      
       // Update each pedestrian's position.
       ps[i]->SetPosition(ps[i]->GetPosition() + (ps[i]->GetVelocity() * dt));
+      
       // Print updated velocities and positions at time t.
       std::cout << " " << ps[i]->GetVelocity().GetXLength() << " " << ps[i]->GetVelocity().GetYLength();
       std::cout << " " << ps[i]->GetPosition().GetX() << " " << ps[i]->GetPosition().GetY();

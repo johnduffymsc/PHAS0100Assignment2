@@ -17,6 +17,8 @@
 #ifndef sfmPedestrianSpawner_h
 #define sfmPedestrianSpawner_h
 
+#include "sfmWin32ExportHeader.h"
+
 #include "sfmTypes.h"
 #include "sfmPedestrian.h"
 #include "sfmTargetedPedestrian.h"

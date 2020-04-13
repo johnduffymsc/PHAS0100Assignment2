@@ -15,8 +15,8 @@
 =============================================================================*/
 
 #include "sfmTypes.h"
-#include "sfmPedestrian.h"
 #include "sfmForces.h"
+#include "sfmPedestrian.h"
 
 #include <cmath>
 #include <memory>
@@ -43,7 +43,7 @@ namespace sfm {
     double v {o->GetVelocity().Length()};
     double b {B(r, e, v, dt)};
     Vec2d direction {r * (1.0 / r.Length())};
-    return direction * GradV(b);
+    return direction * GradV(b) * -1.0;
   }
 
   double GradU(Vec2d r) {
@@ -55,7 +55,7 @@ namespace sfm {
   Vec2d PedestrianBorderForce(std::shared_ptr<Pedestrian> p, double y) {
     Vec2d r {p->GetPosition() - Pos2d(p->GetPosition().GetX(), y)};
     Vec2d direction {r * (1.0 / r.Length())};
-    return direction * GradU(r);
+    return direction * GradU(r) * -1.0;
   }
  
   Vec2d ResultantForce(std::shared_ptr<Pedestrian> p,

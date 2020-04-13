@@ -57,7 +57,7 @@ int main(int argc, char** argv)
   std::cout << std::endl;
 
   // Time loop.
-  double finish_time_s {50.0};
+  double finish_time_s {40.0};
   double dt {0.25};
   for (auto t = dt; t < finish_time_s + dt; t += dt) {
     std::cout << t;

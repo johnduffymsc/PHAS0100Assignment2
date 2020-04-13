@@ -23,7 +23,7 @@
 //#include <vector>
 
 
-TEST_CASE("TargetedPedestrian instantiation", "[pedestrian]" ) {
+TEST_CASE("TargetedPedestrian instantiation", "[TargetedPedestrian]" ) {
 
   // Create a pedestrian at the origin.
   sfm::Pos2d origin;
@@ -45,7 +45,7 @@ TEST_CASE("TargetedPedestrian instantiation", "[pedestrian]" ) {
 
 }
 
-TEST_CASE("TargetedPedestrian instantiation wrapping", "[pedestrian]" ) {
+TEST_CASE("TargetedPedestrian instantiation wrapping", "[TargetedPedestrian]" ) {
 
   // Create a pedestrian outside of world.
   sfm::Pos2d origin(POS2D_XWRAP + 1.0, POS2D_YWRAP + 1.0);
@@ -67,7 +67,7 @@ TEST_CASE("TargetedPedestrian instantiation wrapping", "[pedestrian]" ) {
 
 }
 
-TEST_CASE("TargetedPedestrian movement, including wrapping", "[pedestrian]" ) {
+TEST_CASE("TargetedPedestrian movement, including wrapping", "[TargetedPedestrian]" ) {
 
   // Create a pedestrian at the origin.
   sfm::Pos2d origin;
@@ -103,7 +103,7 @@ TEST_CASE("TargetedPedestrian movement, including wrapping", "[pedestrian]" ) {
 
 }
 
-TEST_CASE("TargetedPedestrian velocity/position setters/getters", "[pedestrian]" ) {
+TEST_CASE("TargetedPedestrian velocity/position setters/getters", "[TargetedPedestrian]" ) {
 
   // Create a pedestrian at the origin.
   sfm::Pos2d origin;

@@ -1,38 +1,138 @@
 PHAS0100Assignment2
 ------------------
 
-[![Build Status](https://travis-ci.com/MattClarkson/PHAS0100Assignment2.svg?branch=master)](https://travis-ci.com/MattClarkson/PHAS0100Assignment2)
-[![Build Status](https://ci.appveyor.com/api/projects/status/5pm89ej732c1ekf0/branch/master)](https://ci.appveyor.com/project/MattClarkson/cmakecatch2)
-
-
 Purpose
 -------
+Coursework 2 by John Duffy for PHAS0100 Research Computing with C++ 2019/2020 at UCL.
 
-Extended version of CMakeCatch2 for PHAS0100 Assignment 2 that includes vec2d, pos2d and dir2d classes with wrapping functionality for periodic boundary conditions. As with CMakeCatch2 this can be used a starting point for a reasonable folder structure for [CMake](https://cmake.org/) based projects,
-that use [CTest](https://cmake.org/) to run unit tests via [Catch](https://github.com/catchorg/Catch2).
+A program to implement Social Force Model for Pedestrian Dynamics (Helbing & Molnar).
+
+Data is supplied from a data file via the --file option, or is randomly generated via --rand option. The options --file and --rand are mutually exclusive. The data file format is space delimited 'x y' pairs, one pair on each line. The --rand option generates linear data from user specified intercept and gradient values, together with the mean and and standard deviation of random noise which is applied to the data.
+
+The method used to solve the linear regression is one of 'normal_equations' or 'gradient_descent', which is selected via the --solver option.
+
+The program returns the intercept and gradient (theta0 and theta1) of the linear regression.
+
+Additionally, the program generates a Gnuplot script which can be used to generate a PNG plot of the data and resultant regression line. This can be viewed easily from the command line using the Eye of GNOME command, eog, or a similar image viewer. It is not necessary to install Gnuplot to perform the Linear Regression or produce the script, only to produce the PNG plot.
 
 
-Credits
--------
+Evidence of Correct Functionality
+---------------------------------
 
-This project was developed as a teaching aid for UCL's ["Research Computing with C++"](http://rits.github-pages.ucl.ac.uk/research-computing-with-cpp/)
-course developed by [Dr. James Hetherington](http://www.ucl.ac.uk/research-it-services/people/james)
-and [Dr. Matt Clarkson](https://iris.ucl.ac.uk/iris/browse/profile?upi=MJCLA42) and then extended by Dr. Jim Dobson based on code by Dr Tim Spain.
+![](sfmPartASection4App.png)
+![](sfmPartASection5App.png)
+![](sfmPartBSection6dApp.png)
+![](sfmPartBSection6eApp.png)
 
-Build Instructions
-------------------
 
-This project itself can be built if you just want to test it. In Linux terms that
-would be:
-``` cmake
-git clone https://github.com/MattClarkson/PHAS0100Assignment2
-mkdir PHAS0100Assignment2-Build
-cd PHAS0100Assignment2-Build
-cmake ../PHAS0100Assignment2
+Installation and Build Instructions
+-----------------------------------
+
+This assignment has been submitted as a zip file, as required by the assignment instructions. To install from the zip file:
+
+```
+unzip 19154676.zip
+cd 19154676
+mkdir PHAS0100Assignment1-Build
+cd PHAS0100Assignment1-Build
+cmake ../PHAS0100Assignment1
 make
 ```
-You can either use this project with the current naming convention or you can use it as a 
-template to create your own project with a different naming convention. To do so,
-please refer to the [CMakeTemplateRenamer](https://github.com/MattClarkson/CMakeTemplateRenamer)
-which will show you how to clone this repository, and rename all the variables to names of your choice.
-Then you would simply build your new project, using cmake, as shown above.
+To run the tests:
+```
+ctest
+```
+The executable, lrgLeastSquaresSolver, will be in the PHAS0100Assignment1-Build/bin directory.
+
+
+Additionally, this assignment can be built from a private GitHub respository. The repository is private to prevent plagiarism, again, as required by the assignment instructions. To obtain the username and password for this repository please contact [John Duffy](mailto:john.duffy.19@ucl.ac.uk). To build from this repository:
+
+```
+git clone https://github.com/johnduffymsc/PHAS0100Assignment1.git
+mkdir PHAS0100Assignment1-Build
+cd PHAS0100Assignment1-Build
+cmake ../PHAS0100Assignment1
+make
+```
+To run the tests:
+```
+ctest
+```
+The executable, lrgLeastSquaresSolver, will be in the PHAS0100Assignment1-Build/bin directory.
+
+To install Gnuplot (on Ubuntu 18.04):
+
+```
+sudo apt install gnuplot
+```
+
+To install Eye of GNOME (on Ubuntu 18.04):
+
+```
+sudo apt install eog
+```
+
+Useage
+------
+
+From the PHAS0100Assignment1-Build/bin directory:
+
+```
+lrgLeastSquaresSolver --file datafile --solver ['normal_equations'|'gradient_descent']
+```
+or
+```
+lrgLeastSquaresSolver --rand theta0 theta1 noise_mean noise_sigma --solver ['normal_equations'|'gradient_descent']
+```
+
+The executable will automatically produce a Gnuplot script in the current directory. To produce a PNG plot of the input data and resultant regression line from this script:
+
+```
+gnuplot lrgLeastSquaresSolver.plt
+```
+
+This will produce lrgLeastSquaresSolver.png in the current directory.
+
+To easily view the plot from the command line using Eye of GNOME:
+```
+eog lrgLeastSquaresSolver.png
+```
+
+Examples
+--------
+
+From the PHAS0100Assignment1-Build/bin directory:
+
+```
+lrgLeastSquaresSolver --file ../../PHAS0100Assignment1/Testing/Data/TestData1.txt --solver 'normal_equations'
+gnuplot lrgLeastSquaresSolver.plt
+eog lrgLeastSquaresSolver.png
+```
+
+
+```
+lrgLeastSquaresSolver --file ../../PHAS0100Assignment1/Testing/Data/TestData1.txt --solver 'gradient_descent'
+gnuplot lrgLeastSquaresSolver.plt
+eog lrgLeastSquaresSolver.png
+```
+
+
+```
+lrgLeastSquaresSolver --file ../../PHAS0100Assignment1/Testing/Data/TestData2.txt --solver 'normal_equations'
+gnuplot lrgLeastSquaresSolver.plt
+eog lrgLeastSquaresSolver.png
+```
+
+
+```
+lrgLeastSquaresSolver --file ../../PHAS0100Assignment1/Testing/Data/TestData2.txt --solver 'gradient_descent'
+gnuplot lrgLeastSquaresSolver.plt
+eog lrgLeastSquaresSolver.png
+```
+
+
+```
+lrgLeastSquaresSolver --rand 10.0 0.0 0.0 3.0 --solver 'normal_equations'
+gnuplot lrgLeastSquaresSolver.plt
+eog lrgLeastSquaresSolver.png
+```

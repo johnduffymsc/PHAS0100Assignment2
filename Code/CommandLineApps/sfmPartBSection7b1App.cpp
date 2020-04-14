@@ -72,7 +72,7 @@ int main(int argc, char** argv)
     // Disable dynamic teams.
     omp_set_dynamic(0);
 
-# pragma omp parallel for
+# pragma omp parallel for firstprivate(ps) firstprivate(dt)
     for (auto i = 0; i < ps.size(); ++i) { // Need index i!
       
       // Create a vector of other pedestrians.

@@ -75,7 +75,7 @@ int main(int argc, char** argv)
     // Disable dynamic teams.
     omp_set_dynamic(0);
 
-# pragma omp parallel for
+# pragma omp parallel for firstprivate(ps) firstprivate(dt) // Copy of ps pointers OK!
     for (auto i = 0; i < ps.size(); ++i) {
       
       // Create a vector of other pedestrians.
@@ -87,7 +87,7 @@ int main(int argc, char** argv)
 
     }
 
-# pragma omp parallel for
+# pragma omp parallel for firstprivate(ps) firstprivate(dt) firstprivate(rs) // Copy of ps pointers OK!
     for (auto i = 0; i < ps.size(); ++i) {
 
       // Update each pedestrian's velocity.

@@ -23,6 +23,9 @@ Evidence of Correct Functionality
 ![](sfmPartASection5App.png)
 ![](sfmPartBSection6dApp.png)
 ![](sfmPartBSection6eApp.png)
+![](sfmPartBSection7aApp.png)
+![](sfmPartBSection7b1App.png)
+![](sfmPartBSection7b2App.png)
 
 
 Installation and Build Instructions

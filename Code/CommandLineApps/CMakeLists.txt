@@ -12,15 +12,19 @@
 #
 #============================================================================*/
 
+find_package(OpenMP)
+
 set(_command_line_apps
   sfmPartASection4App
   sfmPartASection5App
   sfmPartBSection6dApp
   sfmPartBSection6eApp
   sfmPartBSection7aApp
+  sfmPartBSection7b1App
+  sfmPartBSection7b2App
 )
 
 foreach(_app ${_command_line_apps})
   add_executable(${_app} ${_app}.cpp)
-  target_link_libraries(${_app} ${PHAS0100ASSIGNMENT2_LIBRARIES} ${ALL_THIRD_PARTY_LIBRARIES})
+  target_link_libraries(${_app} PUBLIC OpenMP::OpenMP_CXX ${PHAS0100ASSIGNMENT2_LIBRARIES} ${ALL_THIRD_PARTY_LIBRARIES})
 endforeach()

@@ -28,8 +28,9 @@ namespace sfm {
 
   DirectionalPedestrian::~DirectionalPedestrian() {}
 
+  // TODO: Change as required once clarified. Question asked on Slack channel.
   Pos2d DirectionalPedestrian::GetTarget(void) {
-    return Pos2d();
+    return destination;
   }
 
 } // end namespace

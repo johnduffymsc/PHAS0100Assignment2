@@ -29,7 +29,7 @@ namespace sfm {
   TargetedPedestrian::~TargetedPedestrian() {}
 
   Pos2d TargetedPedestrian::GetTarget(void) {
-    return Pos2d();
+    return destination;
   }
 
 } // end namespace

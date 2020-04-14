@@ -14,10 +14,10 @@ matrix:
   fast_finish: true
   include:
     # Builds for MacOS
-    - os: osx
-      osx_image: xcode8
-      env:
-        - EXTRA_CMAKE_ARGS="-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.7"
+    #- os: osx
+    #  osx_image: xcode8
+    #  env:
+    #    - EXTRA_CMAKE_ARGS="-DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.7"
     # Builds for Linux
     - os: linux
       addons:

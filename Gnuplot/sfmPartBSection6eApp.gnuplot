@@ -1,4 +1,4 @@
-set term qt font "arial,14"
+set term qt font "arial,18"
 plot [0:50][0:10] "sfmPartBSection6eApp.data" u 4:5 t "Pedestrian #01",\
 "" u 8:9 t "Pedestrian #02",\
 "" u 12:13 t "Pedestrian #03",\
@@ -19,5 +19,5 @@ plot [0:50][0:10] "sfmPartBSection6eApp.data" u 4:5 t "Pedestrian #01",\
 "" u 72:73 t "Pedestrian #18",\
 "" u 76:77 t "Pedestrian #19",\
 "" u 80:81 t "Pedestrian #20"
-set title "Social Force Model - Part B Section 6e" font "arial-bold,30"
+set title "Social Force Model - Part B Section 6e" font "arial-bold,36"
 set grid

@@ -17,9 +17,12 @@
 #ifndef sfmForces_h
 #define sfmForces_h
 
+#include "sfmWin32ExportHeader.h"
+
 #include "sfmTypes.h"
 #include "sfmPedestrian.h"
 
+#include <memory>
 #include <vector>
 
 
@@ -29,13 +32,18 @@ namespace sfm
 
   double GradV(double b);
 	   
-  Vec2d PedestrianPedestrianForce(Pedestrian &p, Pedestrian &o, double dt);
+  Vec2d PedestrianPedestrianForce(std::shared_ptr<Pedestrian> p,
+				  std::shared_ptr<Pedestrian> o,
+				  double dt);
 
   double GradU(Vec2d r);
 
-  Vec2d PedestrianBorderForce(Pedestrian &p, double y);
+  Vec2d PedestrianBorderForce(std::shared_ptr<Pedestrian> p,
+			      double y);
 
-  Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> &other_ps, double dt);
+  Vec2d ResultantForce(std::shared_ptr<Pedestrian> p,
+		       std::vector<std::shared_ptr<Pedestrian>> other_ps,
+		       double dt);
 
 } // End namespace.
 

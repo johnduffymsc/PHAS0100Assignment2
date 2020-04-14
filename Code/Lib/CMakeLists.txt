@@ -15,19 +15,23 @@
 set(PHAS0100ASSIGNMENT2_LIBRARY_NAME phas0100assignment2)
 
 set(PHAS0100ASSIGNMENT2_LIBRARY_SRCS
-  #sfmBasicTypes.cpp
-  #sfmMyFunctions.cpp
   sfmException.cpp
   sfmTypes.cpp
-  sfmPedestrian.cpp
   sfmForces.cpp
+  sfmPedestrian.cpp
+  sfmTargetedPedestrian.cpp
+  sfmDirectionalPedestrian.cpp
+  sfmPedestrianSpawner.cpp
 )
 
 set(PHAS0100ASSIGNMENT2_LIBRARY_HDRS
   sfmExceptionMacro.h
-  #sfmMoverI.h
+  sfmTypes.h
+  sfmForces.h
   sfmPedestrian.h
-  #sfmForces.h
+  sfmTargetedPedestrian.h
+  sfmDirectionalPedestrian.h
+  sfmPedestrianSpawner.h
 )
 
 add_library(${PHAS0100ASSIGNMENT2_LIBRARY_NAME} ${PHAS0100ASSIGNMENT2_LIBRARY_HDRS} ${PHAS0100ASSIGNMENT2_LIBRARY_SRCS})

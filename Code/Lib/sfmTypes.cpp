@@ -36,7 +36,7 @@ namespace sfm { // Start namespace.
   }
 
   Vec2d Vec2d::operator-(Vec2d v) {
-    return Vec2d(x_length + v.x_length, y_length + v.y_length) * -1.0;
+    return Vec2d(x_length - v.x_length, y_length - v.y_length);
   }
 
   Vec2d Vec2d::operator*(double scaling_factor) {
@@ -70,7 +70,7 @@ namespace sfm { // Start namespace.
   }
 
   Vec2d Pos2d::operator-(Pos2d p) {
-    return Vec2d(p.x - x, p.y - y);
+    return Vec2d(x - p.x, y - p.y);
   }
 
   double Pos2d::GetX(void) {

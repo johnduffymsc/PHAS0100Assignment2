@@ -15,10 +15,11 @@
 =============================================================================*/
 
 #include "sfmTypes.h"
-#include "sfmPedestrian.h"
 #include "sfmForces.h"
+#include "sfmPedestrian.h"
 
 #include <cmath>
+#include <memory>
 #include <vector>
 
 
@@ -34,13 +35,15 @@ namespace sfm {
     return -1.0 * b / Sigma * V0 * exp(-1.0 * b / Sigma);
   }
 	   
-  Vec2d PedestrianPedestrianForce(Pedestrian &p, Pedestrian &o, double dt) {
-    Vec2d r {p.GetPosition() - o.GetPosition()};
-    Vec2d e {(o.GetDestination() - o.GetPosition()) * (1.0 / (o.GetDestination() - o.GetPosition()).Length())};
-    double v {o.GetVelocity().Length()};
+  Vec2d PedestrianPedestrianForce(std::shared_ptr<Pedestrian> p,
+				  std::shared_ptr<Pedestrian> o,
+				  double dt) {
+    Vec2d r {p->GetPosition() - o->GetPosition()};
+    Vec2d e {(o->GetDestination() - o->GetPosition()) * (1.0 / (o->GetDestination() - o->GetPosition()).Length())};
+    double v {o->GetVelocity().Length()};
     double b {B(r, e, v, dt)};
     Vec2d direction {r * (1.0 / r.Length())};
-    return direction * GradV(b);
+    return direction * GradV(b) * -1.0;
   }
 
   double GradU(Vec2d r) {
@@ -49,14 +52,16 @@ namespace sfm {
     return -1.0 / R * U0 * exp(-1.0 * r.Length() / R);
   }
 	   
-  Vec2d PedestrianBorderForce(Pedestrian &p, double y) {
-    Vec2d r {p.GetPosition() - Pos2d(p.GetPosition().GetX(), y)};
+  Vec2d PedestrianBorderForce(std::shared_ptr<Pedestrian> p, double y) {
+    Vec2d r {p->GetPosition() - Pos2d(p->GetPosition().GetX(), y)};
     Vec2d direction {r * (1.0 / r.Length())};
-    return direction * GradU(r);
+    return direction * GradU(r) * -1.0;
   }
  
-  Vec2d ResultantForce(Pedestrian &p, std::vector<Pedestrian> &other_ps, double dt) {
-    Vec2d f {p.PedestrianDestinationForce()};
+  Vec2d ResultantForce(std::shared_ptr<Pedestrian> p,
+		       std::vector<std::shared_ptr<Pedestrian>> other_ps,
+		       double dt) {
+    Vec2d f {p->PedestrianDestinationForce()};
     for (auto o : other_ps) {
       f = f + PedestrianPedestrianForce(p, o, dt);
     }

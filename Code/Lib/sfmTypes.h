@@ -17,6 +17,8 @@
 #ifndef sfmTypes_h
 #define sfmTypes_h
 
+#include "sfmWin32ExportHeader.h"
+
 #ifndef POS2D_XWRAP
 #define POS2D_XWRAP 50.0
 #endif
@@ -28,28 +30,6 @@
 
 namespace sfm { // Start namespace.
 
-  // TODO: Implement the XPPair class as a base class for Vec2d and Pos2d.
-  
-  /*
-  //
-  // Class XYPair.
-  //
-
-  class XYPair {
-  public:
-    // Constructors.
-    XYPair();
-    XYPair(const double x, const double y);
-    // Destructor.
-    ~XYPair();
-    // Parameter value methods.
-    double X(void);
-    double Y(void);
-  private:
-    std::pair<double> xy;
-  };
-  */
-  
   //
   // Class Vec2d - Vectors are defined by a (x_length, y_length) pair.
   //

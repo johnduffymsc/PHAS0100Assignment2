@@ -22,6 +22,7 @@
 #include <sfmPedestrianSpawner.h>
 
 #include <chrono>
+#include <ctime>
 #include <iomanip>
 #include <iostream>
 #include <memory>
@@ -31,8 +32,9 @@
 
 int main(int argc, char** argv)
 {
-  // Start benchmark timer.
-  auto start = std::chrono::high_resolution_clock::now();
+  // Start benchmark timers.
+  auto t_start = std::chrono::high_resolution_clock::now();
+  auto c_start = std::clock();
   
   // Number of pedestrians to create at each end of the corridor.
   int n {20};
@@ -84,12 +86,19 @@ int main(int argc, char** argv)
     //std::cout << std::endl;
   }
 
-  // Stop benchmark timer.
-  auto stop = std::chrono::high_resolution_clock::now();
+  // Stop benchmark timers.
+  auto t_stop = std::chrono::high_resolution_clock::now();
+  auto c_stop = std::clock();
 
-  // Determine benchmark run time.
-  std::chrono::duration<double, std::milli> dur = stop - start;
-  std::cout << "Runtime: " << std::setprecision(3) << std::fixed << dur.count() << "ms" << std::endl;  
+  // Determine Wall and CPU runtimes.
+  std::cout << std::fixed
+	    << std::setprecision(3)
+	    << "CPU time:  "
+	    << 1000.0 * (c_stop - c_start) / CLOCKS_PER_SEC << "ms"
+	    << std::endl
+	    << "Wall time: "
+	    << std::chrono::duration<double, std::milli>(t_stop - t_start).count() << "ms"
+	    << std::endl;
 
   return EXIT_SUCCESS;
 }

@@ -17,6 +17,7 @@ set(_command_line_apps
   sfmPartASection5App
   sfmPartBSection6dApp
   sfmPartBSection6eApp
+  sfmPartBSection7aApp
 )
 
 foreach(_app ${_command_line_apps})

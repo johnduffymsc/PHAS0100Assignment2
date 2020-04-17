@@ -26,6 +26,13 @@
 #include <vector>
 
 
+constexpr double DESIRED_SPEED {1.3};
+constexpr double RELAXATION_TIME {0.5};
+constexpr double FINISH_TIME_S {40.0};
+constexpr double DT {0.25};
+constexpr int N {10};
+
+
 int main(int argc, char** argv)
 {
   // Create random y positions on the closed interval [0, POS2D_YWRAP].
@@ -35,12 +42,12 @@ int main(int argc, char** argv)
   double b {std::nextafter(POS2D_YWRAP, std::numeric_limits<double>::max())}; // For closed interval.
   std::uniform_real_distribution<double> y(a, b);
 
-  // Number of pedestrians to create at each end of the corridor.
-  int n {10};
+  // Create N pedestrians at each end of the corridor.
+  int n {N};
 
   // Common initial parameters for all pedestrians.
-  double desired_speed {1.3};
-  double relaxation_time {0.5};
+  double desired_speed {DESIRED_SPEED};
+  double relaxation_time {RELAXATION_TIME};
   
   // Empty vector of pedestrians.
   std::vector<std::shared_ptr<sfm::Pedestrian>> ps;
@@ -74,8 +81,8 @@ int main(int argc, char** argv)
   std::cout << std::endl;
 
   // Time loop.
-  double finish_time_s {40.0};
-  double dt {0.25};
+  double finish_time_s {FINISH_TIME_S};
+  double dt {DT};
   for (auto t = dt; t < finish_time_s + dt; t += dt) {
     std::cout << t;
     // Pedestrians loop.

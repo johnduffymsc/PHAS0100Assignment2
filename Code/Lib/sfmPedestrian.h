@@ -17,8 +17,6 @@
 #ifndef sfmPedestrian_h
 #define sfmPedestrian_h
 
-#include "sfmWin32ExportHeader.h"
-
 #include "sfmTypes.h"
 
 

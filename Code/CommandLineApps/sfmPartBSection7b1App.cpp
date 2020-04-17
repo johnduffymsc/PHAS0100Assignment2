@@ -32,14 +32,19 @@
 #include <omp.h>
 
 
+constexpr double FINISH_TIME_S {15.0};
+constexpr double DT {0.25};
+constexpr int N {20};
+
+
 int main(int argc, char** argv)
 {
   // Start benchmark timers.
   auto t_start = std::chrono::high_resolution_clock::now();
   auto c_start = std::clock();
   
-  // Number of pedestrians to create at each end of the corridor.
-  int n {20};
+  // Create N pedestrians at each end of the corridor.
+  int n {N};
 
   // Empty vector of pedestrians.
   std::vector<std::shared_ptr<sfm::Pedestrian>> ps;
@@ -63,8 +68,8 @@ int main(int argc, char** argv)
   //std::cout << std::endl;
 
   // Time loop.
-  double finish_time_s {15.0};
-  double dt {0.25};  
+  double finish_time_s {FINISH_TIME_S};
+  double dt {DT};  
   for (auto t = dt; t < finish_time_s + dt; t += dt) {
     //std::cout << t;
     // Pedestrians loop.

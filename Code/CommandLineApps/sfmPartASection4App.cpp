@@ -25,12 +25,18 @@
 #include <vector>
 
 
+constexpr double DESIRED_SPEED {1.3};
+constexpr double RELAXATION_TIME {0.5};
+constexpr double FINISH_TIME_S {40.0};
+constexpr double DT {0.25};
+
+
 int main(int argc, char** argv)
 {
   // Create a vector of pedestrians.
   std::vector<std::shared_ptr<sfm::Pedestrian>> ps;
-  double desired_speed {1.3};
-  double relaxation_time {0.5};
+  double desired_speed {DESIRED_SPEED};
+  double relaxation_time {RELAXATION_TIME};
   ps.push_back(std::make_shared<sfm::TargetedPedestrian>(sfm::Pos2d(0.0, 1.0),
 							 sfm::Pos2d(POS2D_XWRAP, 1.0),
 							 desired_speed,
@@ -57,8 +63,8 @@ int main(int argc, char** argv)
   std::cout << std::endl;
 
   // Time loop.
-  double finish_time_s {40.0};
-  double dt {0.25};
+  double finish_time_s {FINISH_TIME_S};
+  double dt {DT};
   for (auto t = dt; t < finish_time_s + dt; t += dt) {
     std::cout << t;
     // Pedestrians loop.

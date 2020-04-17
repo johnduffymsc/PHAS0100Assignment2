@@ -15,7 +15,6 @@
 #ifndef sfmException_h
 #define sfmException_h
 
-#include "sfmWin32ExportHeader.h"
 #include <stdexcept>
 #include <ostream>
 #include <sstream>
@@ -27,7 +26,7 @@ namespace sfm {
 * \brief Base exception class.
 * \ingroup types
 */
-class PHAS0100ASSIGNMENT2_WINEXPORT Exception : public std::exception
+class Exception : public std::exception
 {
 public:
 

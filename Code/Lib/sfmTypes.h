@@ -17,8 +17,6 @@
 #ifndef sfmTypes_h
 #define sfmTypes_h
 
-#include "sfmWin32ExportHeader.h"
-
 #ifndef POS2D_XWRAP
 #define POS2D_XWRAP 50.0
 #endif

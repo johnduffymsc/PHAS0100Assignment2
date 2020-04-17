@@ -19,11 +19,11 @@
 #include "sfmTypes.h"
 
 
-// Convenience variables.
-double full_world_x {POS2D_XWRAP};
-double full_world_y {POS2D_YWRAP};
-double half_world_x {POS2D_XWRAP / 2.0};
-double half_world_y {POS2D_YWRAP / 2.0};
+constexpr double full_world_x {POS2D_XWRAP};
+constexpr double full_world_y {POS2D_YWRAP};
+constexpr double half_world_x {POS2D_XWRAP / 2.0};
+constexpr double half_world_y {POS2D_YWRAP / 2.0};
+
 
 TEST_CASE("Pos2d constructor", "[Pos2d]") {
 

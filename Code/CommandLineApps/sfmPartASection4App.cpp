@@ -35,24 +35,22 @@ int main(int argc, char** argv)
 {
   // Create a vector of pedestrians.
   std::vector<std::shared_ptr<sfm::Pedestrian>> ps;
-  double desired_speed {DESIRED_SPEED};
-  double relaxation_time {RELAXATION_TIME};
   ps.push_back(std::make_shared<sfm::TargetedPedestrian>(sfm::Pos2d(0.0, 1.0),
 							 sfm::Pos2d(POS2D_XWRAP, 1.0),
-							 desired_speed,
-							 relaxation_time));
+							 DESIRED_SPEED,
+							 RELAXATION_TIME));
   ps.push_back(std::make_shared<sfm::TargetedPedestrian>(sfm::Pos2d(0.0, 9.0),
 							 sfm::Pos2d(POS2D_XWRAP, 9.0),
-							 desired_speed,
-							 relaxation_time));
+							 DESIRED_SPEED,
+							 RELAXATION_TIME));
   ps.push_back(std::make_shared<sfm::TargetedPedestrian>(sfm::Pos2d(POS2D_XWRAP, 4.9),
 							 sfm::Pos2d(0.0, 4.9),
-							 desired_speed,
-							 relaxation_time));
+							 DESIRED_SPEED,
+							 RELAXATION_TIME));
   ps.push_back(std::make_shared<sfm::TargetedPedestrian>(sfm::Pos2d(0.0, 5.1),
 							 sfm::Pos2d(POS2D_XWRAP, 5.1),
-							 desired_speed,
-							 relaxation_time));
+							 DESIRED_SPEED,
+							 RELAXATION_TIME));
 
   // Print velocities and positions at t = 0.0.
   std::cout << 0.0;

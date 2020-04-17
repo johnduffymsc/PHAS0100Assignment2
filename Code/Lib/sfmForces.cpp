@@ -23,6 +23,13 @@
 #include <vector>
 
 
+// Helbing and Molnar constants.
+constexpr double V0 {2.1};
+constexpr double SIGMA {0.3};
+constexpr double U0 {10.0};
+constexpr double R {0.2};
+
+
 namespace sfm {
 
   double B(Vec2d r, Vec2d e, double v, double dt) {
@@ -30,9 +37,7 @@ namespace sfm {
   }
 
   double GradV(double b) {
-    double V0 {2.1};
-    double Sigma {0.3};
-    return -1.0 * b / Sigma * V0 * exp(-1.0 * b / Sigma);
+    return -1.0 * b / SIGMA * V0 * exp(-1.0 * b / SIGMA);
   }
 	   
   Vec2d PedestrianPedestrianForce(std::shared_ptr<Pedestrian> p,
@@ -47,8 +52,6 @@ namespace sfm {
   }
 
   double GradU(Vec2d r) {
-    double U0 {10.0};
-    double R {0.2};
     return -1.0 / R * U0 * exp(-1.0 * r.Length() / R);
   }
 	   

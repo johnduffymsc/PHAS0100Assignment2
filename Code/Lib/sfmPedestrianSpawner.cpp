@@ -26,6 +26,10 @@
 #include <vector>
 
 
+constexpr double DESIRED_SPEED {1.3};
+constexpr double RELAXATION_TIME {0.5};
+
+
 namespace sfm {
 
   std::vector<std::shared_ptr<Pedestrian>> PedestrianSpawner::Uniform(int n,
@@ -71,31 +75,27 @@ namespace sfm {
     std::vector<std::shared_ptr<Pedestrian>> ps;
     for (auto i = 0; i < n; ++i) {
       
-      // Common initial parameters.
-      double desired_speed {1.3};
-      double relaxation_time {0.5};
-
       // Spawn TargetedPedestrian(s) or DirectionalPedestrian(s).
       if (type == "targeted") {
 	// Spawn TargetedPedestrians.
 	ps.push_back(std::make_shared<TargetedPedestrian>(Pos2d(x(gen), y(gen)),
 							  Pos2d(x_target, y_target(gen)),
-							  desired_speed,
-							  relaxation_time));
+							  DESIRED_SPEED,
+							  RELAXATION_TIME));
       }
       else if (type == "directional") {
 	// Spawn DirectionalPedestrians.
 	ps.push_back(std::make_shared<DirectionalPedestrian>(Pos2d(x(gen), y(gen)),
 							     Pos2d(x_target, y_target(gen)),
-							     desired_speed,
-							     relaxation_time));
+							     DESIRED_SPEED,
+							     RELAXATION_TIME));
       }
       else {
 	// Spawn TargetedPedestrians as the default.
 	ps.push_back(std::make_shared<TargetedPedestrian>(Pos2d(x(gen), y(gen)),
 							  Pos2d(x_target, y_target(gen)),
-							  desired_speed,
-							  relaxation_time));
+							  DESIRED_SPEED,
+							  RELAXATION_TIME));
       }
     }
     return ps;

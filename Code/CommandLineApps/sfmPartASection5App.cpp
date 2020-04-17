@@ -45,10 +45,6 @@ int main(int argc, char** argv)
   // Create N pedestrians at each end of the corridor.
   int n {N};
 
-  // Common initial parameters for all pedestrians.
-  double desired_speed {DESIRED_SPEED};
-  double relaxation_time {RELAXATION_TIME};
-  
   // Empty vector of pedestrians.
   std::vector<std::shared_ptr<sfm::Pedestrian>> ps;
 
@@ -58,8 +54,8 @@ int main(int argc, char** argv)
     sfm::Pos2d destination {POS2D_XWRAP, y(gen)};
     ps.push_back(std::make_shared<sfm::TargetedPedestrian>(origin,
 							   destination,
-							   desired_speed,
-							   relaxation_time));
+							   DESIRED_SPEED,
+							   RELAXATION_TIME));
   }
   
   // Add pedestrians with origin x = POS2D_XWRAP and destination x = 0.0.
@@ -68,8 +64,8 @@ int main(int argc, char** argv)
     sfm::Pos2d destination {0.0, y(gen)};
     ps.push_back(std::make_shared<sfm::TargetedPedestrian>(origin,
 							   destination,
-							   desired_speed,
-							   relaxation_time));
+							   DESIRED_SPEED,
+							   RELAXATION_TIME));
   }
 
   // Print velocities and positions at t = 0.0.

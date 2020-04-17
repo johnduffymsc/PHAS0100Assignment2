@@ -19,8 +19,9 @@
 #include "sfmTypes.h"
 #include "sfmTargetedPedestrian.h"
 
-//#include <iostream>
-//#include <vector>
+
+constexpr double DESIRED_SPEED {1.0};
+constexpr double RELAXATION_TIME {0.5};
 
 
 TEST_CASE("TargetedPedestrian instantiation", "[TargetedPedestrian]" ) {
@@ -28,9 +29,7 @@ TEST_CASE("TargetedPedestrian instantiation", "[TargetedPedestrian]" ) {
   // Create a pedestrian at the origin.
   sfm::Pos2d origin;
   sfm::Pos2d destination(POS2D_XWRAP, 0.0);
-  double desired_speed {1.0};
-  double relaxation_time {0.5};
-  sfm::TargetedPedestrian p(origin, destination, desired_speed, relaxation_time);
+  sfm::TargetedPedestrian p(origin, destination, DESIRED_SPEED, RELAXATION_TIME);
 
   // Test the instantiation of the pedestrian.
   REQUIRE(typeid(p) == typeid(sfm::TargetedPedestrian));
@@ -50,9 +49,7 @@ TEST_CASE("TargetedPedestrian instantiation wrapping", "[TargetedPedestrian]" ) 
   // Create a pedestrian outside of world.
   sfm::Pos2d origin(POS2D_XWRAP + 1.0, POS2D_YWRAP + 1.0);
   sfm::Pos2d destination(POS2D_XWRAP, 0.0);
-  double desired_speed {1.0};
-  double relaxation_time {0.5};
-  sfm::TargetedPedestrian p(origin, destination, desired_speed, relaxation_time);
+  sfm::TargetedPedestrian p(origin, destination, DESIRED_SPEED, RELAXATION_TIME);
 
   // Test the instantiation of the pedestrian.
   REQUIRE(typeid(p) == typeid(sfm::TargetedPedestrian));
@@ -72,9 +69,7 @@ TEST_CASE("TargetedPedestrian movement, including wrapping", "[TargetedPedestria
   // Create a pedestrian at the origin.
   sfm::Pos2d origin;
   sfm::Pos2d destination(POS2D_XWRAP, POS2D_YWRAP);
-  double desired_speed {1.0};
-  double relaxation_time {0.5};
-  sfm::TargetedPedestrian p(origin, destination, desired_speed, relaxation_time);
+  sfm::TargetedPedestrian p(origin, destination, DESIRED_SPEED, RELAXATION_TIME);
 
   // Test the pedestrian is at the origin.
   REQUIRE(p.GetPosition().GetX() == 0.0);
@@ -108,9 +103,7 @@ TEST_CASE("TargetedPedestrian velocity/position setters/getters", "[TargetedPede
   // Create a pedestrian at the origin.
   sfm::Pos2d origin;
   sfm::Pos2d destination(POS2D_XWRAP, POS2D_YWRAP);
-  double desired_speed {1.0};
-  double relaxation_time {0.5};
-  sfm::TargetedPedestrian p(origin, destination, desired_speed, relaxation_time);
+  sfm::TargetedPedestrian p(origin, destination, DESIRED_SPEED, RELAXATION_TIME);
 
   // Create a velocity vector.
   sfm::Vec2d vec2d(2.0, 2.0);

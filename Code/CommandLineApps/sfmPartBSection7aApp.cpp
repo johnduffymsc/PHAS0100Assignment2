@@ -27,9 +27,9 @@
 #include <iostream>
 
 
-constexpr double FINISH_TIME_S {15.0};
+constexpr double FINISH_TIME_S {40.0};
 constexpr double DT {0.25};
-constexpr int N {10};
+constexpr int N {20};
 
 
 int main(int argc, char** argv)

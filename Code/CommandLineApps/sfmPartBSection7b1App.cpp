@@ -29,8 +29,8 @@
 #include <omp.h>
 
 
-constexpr double FINISH_TIME_S {15.0};
-constexpr double DT {0.25};
+constexpr int FINISH_TIME_S {(int)(40.0 * 1000.0)}; // OpenMP requires an integer loop variable.
+constexpr int DT {(int)(0.25 * 1000.0)};
 constexpr int N {20};
 
 
@@ -40,10 +40,10 @@ int main(int argc, char** argv)
   auto t_start = std::chrono::high_resolution_clock::now();
   auto c_start = std::clock();
   
-  // Empty vector of pedestrians.
+  // Empty vector of pedestrians. Polymorphic - Can hold TargetedPedestrians and DirectionalPedestrians.
   sfm::VP ps;
   
-  // Add N TargetedPedestrian(s) in a box at the x = 0 end, targeting the mid point of the x = POS2D_XWRAP end.
+  // Add N TargetedPedestrian(s) in a box at the x = 0 end, targeting the mid position of the x = POS2D_XWRAP end.
   for (auto p : sfm::PedestrianSpawner::CreateDistributed(N,
 							  sfm::targeted,
 							  sfm::Pos2d(0.0, 4.0),
@@ -52,7 +52,7 @@ int main(int argc, char** argv)
     ps.push_back(p);
   }
 
-  // Add N DirectionalPedestrian(s) in a box at the x = POS2D_XWRAP end, targeting the mid point of the x = 0 end.
+  // Add N DirectionalPedestrian(s) in a box at the x = POS2D_XWRAP end, targeting the mid position of the x = 0 end.
   for (auto p : sfm::PedestrianSpawner::CreateDistributed(N,
 							  sfm::directional,
 							  sfm::Pos2d(POS2D_XWRAP - 2.0, 4.0),
@@ -61,25 +61,36 @@ int main(int argc, char** argv)
     ps.push_back(p);
   }
   
+  // Print velocities and positions at t = 0.0.
+  std::cout << 0.0;
+  for (auto &p : ps) {
+    std::cout << " " << p->GetVelocity().GetXLength() << " " << p->GetVelocity().GetYLength();
+    std::cout << " " << p->GetPosition().GetX() << " " << p->GetPosition().GetY();
+  }
+  std::cout << std::endl;
+
   // Time loop.
-  for (auto t = DT; t < FINISH_TIME_S + DT; t += DT) {
-
-    // Pedestrian loop.
-    # pragma omp parallel for firstprivate(ps) firstprivate(DT)
-    for (auto i = 0; i < ps.size(); ++i) {
-
+  #pragma omp parallel for
+  for (int t = DT; t < FINISH_TIME_S + DT; t += DT) {
+    std::cout << t;
+    // Pedestrians loop.
+    for (auto i = 0; i < ps.size(); ++i) { // Need index i!
+      
       // Create a vector of other pedestrians.
-      std::vector<std::shared_ptr<sfm::Pedestrian>> other_ps = ps;
+      sfm::VP other_ps = ps;
       other_ps.erase(other_ps.begin() + i);
       
       // Update each pedestrian's velocity.
-      ps[i]->SetVelocity(ps[i]->GetVelocity() + (sfm::ResultantForce(ps[i], other_ps, DT) * DT));
+      ps[i]->SetVelocity(ps[i]->GetVelocity() + (sfm::ResultantForce(ps[i], other_ps, (double)(DT / 1000.0)) * (double)(DT / 1000.0)));
       
       // Update each pedestrian's position.
-      ps[i]->SetPosition(ps[i]->GetPosition() + (ps[i]->GetVelocity() * DT));
-
+      ps[i]->SetPosition(ps[i]->GetPosition() + (ps[i]->GetVelocity() * (double)(DT / 1000.0)));
+      
+      // Print updated velocities and positions at time t.
+      std::cout << " " << ps[i]->GetVelocity().GetXLength() << " " << ps[i]->GetVelocity().GetYLength();
+      std::cout << " " << ps[i]->GetPosition().GetX() << " " << ps[i]->GetPosition().GetY();
     }
-
+    std::cout << std::endl;
   }
 
   // Stop benchmark timers.
@@ -87,7 +98,8 @@ int main(int argc, char** argv)
   auto c_stop = std::clock();
 
   // Determine Wall and CPU runtimes.
-  std::cout << std::fixed
+  // Write to std::clog so we can seperate program output from timings.
+  std::clog << std::fixed
 	    << std::setprecision(3)
 	    << "CPU time:  "
 	    << 1000.0 * (c_stop - c_start) / CLOCKS_PER_SEC << "ms"

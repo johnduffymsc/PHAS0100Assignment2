@@ -16,8 +16,6 @@ set(DATA_DIR ${CMAKE_SOURCE_DIR}/Testing/Data)
 set(TMP_DIR ${CMAKE_BINARY_DIR}/Testing/Temporary)
 
 set(TEST_CASES
-  #sfmCommandLineArgsTest
-  #sfmBasicTest
   sfmTypesTest
   sfmTargetedPedestrianTest
   sfmDirectionalPedestrianTest
@@ -35,9 +33,6 @@ endforeach()
 # Dont forget its:  add_test(<test name (globally unique) > <exe name> <argument1> <argument2>
 ##################################################################################################
 
-#add_test(1File ${EXECUTABLE_OUTPUT_PATH}/sfmCommandLineArgsTest ${DATA_DIR}/input.txt)
-#add_test(NoArgs ${EXECUTABLE_OUTPUT_PATH}/sfmBasicTest)
-#add_test(NoArgs ${EXECUTABLE_OUTPUT_PATH}/sfmTypesTest)
 add_test(Types ${EXECUTABLE_OUTPUT_PATH}/sfmTypesTest)
 add_test(TargetedPedestrian ${EXECUTABLE_OUTPUT_PATH}/sfmTargetedPedestrianTest)
 add_test(DirectionalPedestrian ${EXECUTABLE_OUTPUT_PATH}/sfmDirectionalPedestrianTest)

@@ -17,9 +17,10 @@
 #ifndef sfmPedestrian_h
 #define sfmPedestrian_h
 
-#include "sfmWin32ExportHeader.h"
-
 #include "sfmTypes.h"
+
+#include <vector>
+#include <memory>
 
 
 namespace sfm {
@@ -51,6 +52,9 @@ namespace sfm {
     Pos2d position;
   };
 
+  typedef std::shared_ptr<Pedestrian> P;
+  typedef std::vector<std::shared_ptr<Pedestrian>> VP;
+    
 } // end namespace
 
 #endif

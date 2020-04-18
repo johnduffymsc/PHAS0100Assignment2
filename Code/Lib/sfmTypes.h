@@ -26,11 +26,9 @@
 #endif
 
 
-namespace sfm { // Start namespace.
+namespace sfm {
 
-  //
-  // Class Vec2d - Vectors are defined by a (x_length, y_length) pair.
-  //
+  // A class for 2D vectors, where the vector is defined by x and y lengths.
   
   class Vec2d {
   public:
@@ -51,9 +49,7 @@ namespace sfm { // Start namespace.
     double y_length;
   };
     
-  //
-  // Class Pos2d - Positions are defined by a (x, y) pair.
-  //
+  // A class for 2D positions, where a position is defined by x and y values. 
   
   class Pos2d {
   public:
@@ -68,7 +64,7 @@ namespace sfm { // Start namespace.
     double GetX(void);
     double GetY(void);
   private:
-    static double Wrap(double z, double max_z); // Recursive method!
+    static double Wrap(double z, double max_z);
     double x;
     double y;
   };

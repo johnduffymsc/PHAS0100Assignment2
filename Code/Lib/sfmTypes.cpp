@@ -19,11 +19,9 @@
 #include <cmath>
 
 
-namespace sfm { // Start namespace.
+namespace sfm {
 
-  //
-  // Class Vec2d - Vectors are defined by a (x_length, y_length) pair.
-  //
+  // A class for 2D vectors, where the vector is defined by x and y lengths.
   
   Vec2d::Vec2d(void) : x_length{0.0}, y_length{0.0} {};
 
@@ -55,9 +53,7 @@ namespace sfm { // Start namespace.
     return y_length;
   }
 
-  //
-  // Class Pos2d - Positions are defined by a (x, y) pair.
-  //
+  // A class for 2D positions, where the position is defined by x and y values.
   
   Pos2d::Pos2d(void) : x{0.0}, y{0.0} {};
 

@@ -19,8 +19,6 @@
 #include "sfmPedestrian.h"
 
 #include <cmath>
-#include <memory>
-#include <vector>
 
 
 // Helbing and Molnar constants.
@@ -40,9 +38,7 @@ namespace sfm {
     return -1.0 * b / SIGMA * V0 * exp(-1.0 * b / SIGMA);
   }
 	   
-  Vec2d PedestrianPedestrianForce(std::shared_ptr<Pedestrian> p,
-				  std::shared_ptr<Pedestrian> o,
-				  double dt) {
+  Vec2d PedestrianPedestrianForce(P p, P o, double dt) {
     Vec2d r {p->GetPosition() - o->GetPosition()};
     Vec2d e {(o->GetDestination() - o->GetPosition()) * (1.0 / (o->GetDestination() - o->GetPosition()).Length())};
     double v {o->GetVelocity().Length()};
@@ -55,15 +51,13 @@ namespace sfm {
     return -1.0 / R * U0 * exp(-1.0 * r.Length() / R);
   }
 	   
-  Vec2d PedestrianBorderForce(std::shared_ptr<Pedestrian> p, double y) {
+  Vec2d PedestrianBorderForce(P p, double y) {
     Vec2d r {p->GetPosition() - Pos2d(p->GetPosition().GetX(), y)};
     Vec2d direction {r * (1.0 / r.Length())};
     return direction * GradU(r) * -1.0;
   }
  
-  Vec2d ResultantForce(std::shared_ptr<Pedestrian> p,
-		       std::vector<std::shared_ptr<Pedestrian>> other_ps,
-		       double dt) {
+  Vec2d ResultantForce(P p, VP other_ps, double dt) {
     Vec2d f {p->PedestrianDestinationForce()};
     for (auto o : other_ps) {
       f = f + PedestrianPedestrianForce(p, o, dt);

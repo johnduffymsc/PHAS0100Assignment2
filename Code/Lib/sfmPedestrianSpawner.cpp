@@ -22,8 +22,6 @@
 
 #include <random>
 #include <memory>
-#include <string>
-#include <vector>
 
 
 constexpr double DESIRED_SPEED {1.3};
@@ -32,72 +30,42 @@ constexpr double RELAXATION_TIME {0.5};
 
 namespace sfm {
 
-  std::vector<std::shared_ptr<Pedestrian>> PedestrianSpawner::Uniform(int n,
-								      std::string type,
-								      double x_target) {
-    return Factory(n, type, 0.0, POS2D_XWRAP, 0.0, POS2D_YWRAP, x_target);
+  VP PedestrianSpawner::CreateUniform(int n, PedestrianType type, Pos2d destination) {
+    return Factory(n, type, Pos2d(0.0, 0.0), Pos2d(POS2D_XWRAP, POS2D_YWRAP), destination);
   }
       
-  std::vector<std::shared_ptr<Pedestrian>> PedestrianSpawner::Distributed(int n,
-									  std::string type,
-									  double x_start,
-									  double x_end,
-									  double y_start,
-									  double y_end,
-									  double x_target) {
-    return Factory(n, type, x_start, x_end, y_start, y_end, x_target);
+  VP PedestrianSpawner::CreateDistributed(int n, PedestrianType type, Pos2d origin_min, Pos2d origin_max, Pos2d destination) {
+    return Factory(n, type, origin_min, origin_max, destination);
   }
 
-  std::vector<std::shared_ptr<Pedestrian>> PedestrianSpawner::Factory(int n,
-								      std::string type,
-								      double x_start,
-								      double x_end,
-								      double y_start,
-								      double y_end,
-								      double x_target) {
+  VP PedestrianSpawner::Factory(int n, PedestrianType type, Pos2d origin_min, Pos2d origin_max, Pos2d destination) {
     // Initialise random number generator.
     std::random_device rd;
     std::mt19937 gen(rd());
     
-    // Create random x box positions on the closed interval [x_start, x_end].
-    std::uniform_real_distribution<double> x(x_start,
-					     std::nextafter(x_end, std::numeric_limits<double>::max()));
+    // Create a random x values within the box.
+    std::uniform_real_distribution<double> x(origin_min.GetX(), origin_max.GetX());
     
-    // Create random y box positions on the closed interval [y_start, y_end].
-    std::uniform_real_distribution<double> y(y_start,
-					     std::nextafter(y_end, std::numeric_limits<double>::max()));
+    // Create a random y values within the box.
+    std::uniform_real_distribution<double> y(origin_min.GetY(), origin_max.GetY());
     
-    // Create random y target positions on the closed interval [0.0, POS2D_YWRAP].
-    std::uniform_real_distribution<double> y_target(0.0,
-						    std::nextafter(POS2D_YWRAP, std::numeric_limits<double>::max()));
-
     // Create n pedestrians.
-    std::vector<std::shared_ptr<Pedestrian>> ps;
-    for (auto i = 0; i < n; ++i) {
-      
-      // Spawn TargetedPedestrian(s) or DirectionalPedestrian(s).
-      if (type == "targeted") {
-	// Spawn TargetedPedestrians.
+    VP ps;
+    for (auto i = 0; i < n; ++i) {      
+      if (type == targeted) {
 	ps.push_back(std::make_shared<TargetedPedestrian>(Pos2d(x(gen), y(gen)),
-							  Pos2d(x_target, y_target(gen)),
+							  destination,
 							  DESIRED_SPEED,
 							  RELAXATION_TIME));
       }
-      else if (type == "directional") {
-	// Spawn DirectionalPedestrians.
+      if (type == directional) {
 	ps.push_back(std::make_shared<DirectionalPedestrian>(Pos2d(x(gen), y(gen)),
-							     Pos2d(x_target, y_target(gen)),
+							     destination,
 							     DESIRED_SPEED,
 							     RELAXATION_TIME));
       }
-      else {
-	// Spawn TargetedPedestrians as the default.
-	ps.push_back(std::make_shared<TargetedPedestrian>(Pos2d(x(gen), y(gen)),
-							  Pos2d(x_target, y_target(gen)),
-							  DESIRED_SPEED,
-							  RELAXATION_TIME));
-      }
     }
+
     return ps;
   }
 

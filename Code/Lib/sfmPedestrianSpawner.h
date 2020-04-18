@@ -22,35 +22,19 @@
 #include "sfmTargetedPedestrian.h"
 #include "sfmDirectionalPedestrian.h"
 
-#include <memory>
-#include <string>
-#include <vector>
-
 
 namespace sfm {
 
+  enum PedestrianType {targeted, directional};
+    
   class PedestrianSpawner {
   public:
-    static std::vector<std::shared_ptr<Pedestrian>> Uniform(int n,
-							    std::string type,
-							    double x_target);
+    static VP CreateUniform(int n, PedestrianType type, Pos2d destination);
       
-    static std::vector<std::shared_ptr<Pedestrian>> Distributed(int n,
-								std::string type,
-								double x_start,
-								double x_end,
-								double y_start,
-								double y_end,
-								double x_target);
+    static VP CreateDistributed(int n, PedestrianType type, Pos2d origin_min, Pos2d origin_max, Pos2d destination);
 
   private:
-    static std::vector<std::shared_ptr<Pedestrian>> Factory(int n,
-							    std::string type,
-							    double x_start,
-							    double x_end,
-							    double y_start,
-							    double y_end,
-							    double x_target);
+    static VP Factory (int n, PedestrianType type, Pos2d origin_min, Pos2d origin_max, Pos2d destination);
   };
 
 } // end namespace

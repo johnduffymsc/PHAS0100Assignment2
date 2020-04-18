@@ -23,7 +23,6 @@
 #include <iostream>
 #include <memory>
 #include <random>
-#include <vector>
 
 
 constexpr double DESIRED_SPEED {1.3};
@@ -35,21 +34,16 @@ constexpr int N {10};
 
 int main(int argc, char** argv)
 {
-  // Create random y positions on the closed interval [0, POS2D_YWRAP].
+  // Create random y positions.
   std::random_device rd;
   std::mt19937 gen(rd());
-  double a {0.0};
-  double b {std::nextafter(POS2D_YWRAP, std::numeric_limits<double>::max())}; // For closed interval.
-  std::uniform_real_distribution<double> y(a, b);
-
-  // Create N pedestrians at each end of the corridor.
-  int n {N};
+  std::uniform_real_distribution<double> y(0.0, POS2D_YWRAP);
 
   // Empty vector of pedestrians.
-  std::vector<std::shared_ptr<sfm::Pedestrian>> ps;
+  sfm::VP ps;
 
   // Add pedestrians with origin x = 0.0 and destination x = POS2D_XWRAP.
-  for (auto i = 0; i < n; ++i) {
+  for (auto i = 0; i < N; ++i) {
     sfm::Pos2d origin {0.0, y(gen)};
     sfm::Pos2d destination {POS2D_XWRAP, y(gen)};
     ps.push_back(std::make_shared<sfm::TargetedPedestrian>(origin,
@@ -59,7 +53,7 @@ int main(int argc, char** argv)
   }
   
   // Add pedestrians with origin x = POS2D_XWRAP and destination x = 0.0.
-  for (auto i = 0; i < n; ++i) {
+  for (auto i = 0; i < N; ++i) {
     sfm::Pos2d origin {POS2D_XWRAP, y(gen)};
     sfm::Pos2d destination {0.0, y(gen)};
     ps.push_back(std::make_shared<sfm::TargetedPedestrian>(origin,
@@ -77,23 +71,26 @@ int main(int argc, char** argv)
   std::cout << std::endl;
 
   // Time loop.
-  double finish_time_s {FINISH_TIME_S};
-  double dt {DT};
-  for (auto t = dt; t < finish_time_s + dt; t += dt) {
+  for (auto t = DT; t < FINISH_TIME_S + DT; t += DT) {
     std::cout << t;
+
     // Pedestrians loop.
-    for (auto i = 0; i < ps.size(); ++i) { // Need index i!
+    for (auto i = 0; i < ps.size(); ++i) {
       // Create a vector of other pedestrians.
-      std::vector<std::shared_ptr<sfm::Pedestrian>> other_ps = ps;
+      sfm::VP other_ps = ps;
       other_ps.erase(other_ps.begin() + i);
+      
       // Update each pedestrian's velocity.
-      ps[i]->SetVelocity(ps[i]->GetVelocity() + (sfm::ResultantForce(ps[i], other_ps, dt) * dt));
+      ps[i]->SetVelocity(ps[i]->GetVelocity() + (sfm::ResultantForce(ps[i], other_ps, DT) * DT));
+      
       // Update each pedestrian's position.
-      ps[i]->SetPosition(ps[i]->GetPosition() + (ps[i]->GetVelocity() * dt));
+      ps[i]->SetPosition(ps[i]->GetPosition() + (ps[i]->GetVelocity() * DT));
+      
       // Print updated velocities and positions at time t.
       std::cout << " " << ps[i]->GetVelocity().GetXLength() << " " << ps[i]->GetVelocity().GetYLength();
       std::cout << " " << ps[i]->GetPosition().GetX() << " " << ps[i]->GetPosition().GetY();
     }
+    
     std::cout << std::endl;
   }
 

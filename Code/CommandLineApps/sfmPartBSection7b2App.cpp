@@ -25,8 +25,6 @@
 #include <ctime>
 #include <iomanip>
 #include <iostream>
-#include <memory>
-#include <string>
 #include <vector>
 
 #include <omp.h>
@@ -43,69 +41,56 @@ int main(int argc, char** argv)
   auto t_start = std::chrono::high_resolution_clock::now();
   auto c_start = std::clock();
   
-  // Create N pedestrians at each end of the corridor.
-  int n {N};
-
   // Empty vector of pedestrians.
-  std::vector<std::shared_ptr<sfm::Pedestrian>> ps;
+  sfm::VP ps;
   
-  // Add n TargetedPedestrian(s) in a box at the x = 0 end, targeting the x = POS2D_XWRAP end.
-  for (auto p : sfm::PedestrianSpawner::Distributed(n, "targeted", 0.0, 2.0, 4.0, 6.0, POS2D_XWRAP)) {
+  // Add N TargetedPedestrian(s) in a box at the x = 0 end, targeting the mid point of the x = POS2D_XWRAP end.
+  for (auto p : sfm::PedestrianSpawner::CreateDistributed(N,
+							  sfm::targeted,
+							  sfm::Pos2d(0.0, 4.0),
+							  sfm::Pos2d(2.0, 6.0),
+							  sfm::Pos2d(POS2D_XWRAP, POS2D_XWRAP / 2.0))) {
     ps.push_back(p);
   }
 
-  // Add n DirectionalPedestrian(s) in a box at the x = POS2D_XWRAP end, targeting the x = 0 end.
-  for (auto p : sfm::PedestrianSpawner::Distributed(n, "directional", POS2D_XWRAP - 2.0, POS2D_XWRAP, 4.0, 6.0, 0.0)) {
+  // Add n DirectionalPedestrian(s) in a box at the x = POS2D_XWRAP end, targeting the mid point of the x = 0 end.
+  for (auto p : sfm::PedestrianSpawner::CreateDistributed(N,
+							  sfm::directional,
+							  sfm::Pos2d(POS2D_XWRAP - 2.0, 4.0),
+							  sfm::Pos2d(POS2D_XWRAP, 6.0),
+							  sfm::Pos2d(0.0, POS2D_YWRAP / 2.0))) {
     ps.push_back(p);
   }
   
-  // Print velocities and positions at t = 0.0.
-  //std::cout << 0.0;
-  //for (auto &p : ps) {
-  //  std::cout << " " << p->GetVelocity().GetXLength() << " " << p->GetVelocity().GetYLength();
-  //  std::cout << " " << p->GetPosition().GetX() << " " << p->GetPosition().GetY();
-  //}
-  //std::cout << std::endl;
-
   // Time loop.
-  double finish_time_s {FINISH_TIME_S};
-  double dt {DT};  
-  for (auto t = dt; t < finish_time_s + dt; t += dt) {
-    //std::cout << t;
-    // Pedestrians loop.
+  for (auto t = DT; t < FINISH_TIME_S + DT; t += DT) {
 
     // Create a vector to store the resultant forces.
     std::vector<sfm::Vec2d> rs(ps.size());
     
-    // Disable dynamic teams.
-    omp_set_dynamic(0);
-
-# pragma omp parallel for firstprivate(ps) firstprivate(dt) // Copy of ps pointers OK!
+    # pragma omp parallel for firstprivate(ps) firstprivate(DT)
     for (auto i = 0; i < ps.size(); ++i) {
       
       // Create a vector of other pedestrians.
-      std::vector<std::shared_ptr<sfm::Pedestrian>> other_ps = ps;
+      sfm::VP other_ps = ps;
       other_ps.erase(other_ps.begin() + i);
       
       // Update each pedestrian's velocity.
-      rs[i] = sfm::ResultantForce(ps[i], other_ps, dt);
+      rs[i] = sfm::ResultantForce(ps[i], other_ps, DT);
 
     }
 
-# pragma omp parallel for firstprivate(ps) firstprivate(dt) firstprivate(rs) // Copy of ps pointers OK!
+    # pragma omp parallel for firstprivate(ps) firstprivate(DT) firstprivate(rs)
     for (auto i = 0; i < ps.size(); ++i) {
 
       // Update each pedestrian's velocity.
-      ps[i]->SetVelocity(ps[i]->GetVelocity() + rs[i] * dt);
+      ps[i]->SetVelocity(ps[i]->GetVelocity() + rs[i] * DT);
       
       // Update each pedestrian's position.
-      ps[i]->SetPosition(ps[i]->GetPosition() + (ps[i]->GetVelocity() * dt));
+      ps[i]->SetPosition(ps[i]->GetPosition() + (ps[i]->GetVelocity() * DT));
       
-      // Print updated velocities and positions at time t.
-      //std::cout << " " << ps[i]->GetVelocity().GetXLength() << " " << ps[i]->GetVelocity().GetYLength();
-      //std::cout << " " << ps[i]->GetPosition().GetX() << " " << ps[i]->GetPosition().GetY();
     }
-    //std::cout << std::endl;
+
   }
 
   // Stop benchmark timers.

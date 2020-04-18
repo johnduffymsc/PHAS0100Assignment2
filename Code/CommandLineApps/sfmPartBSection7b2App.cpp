@@ -25,12 +25,13 @@
 #include <ctime>
 #include <iomanip>
 #include <iostream>
+#include <memory>
 
 #include <omp.h>
 
 
-constexpr int FINISH_TIME_S {(int)(40.0 * 1000.0)}; // OpenMP requires an integer loop variable.
-constexpr int DT {(int)(0.25 * 1000.0)};
+constexpr double FINISH_TIME_S {40.0};
+constexpr double DT {0.25};
 constexpr int N {20};
 
 
@@ -69,27 +70,35 @@ int main(int argc, char** argv)
   }
   std::cout << std::endl;
 
+  // Create a vector to store the resultant forces.
+  std::vector<sfm::Vec2d> rs(ps.size());
+  
   // Time loop.
-  #pragma omp parallel for firstprivate(ps)
-  for (int t = DT; t < FINISH_TIME_S + DT; t += DT) {
+  for (auto t = DT; t < FINISH_TIME_S + DT; t += DT) {
     std::cout << t;
-    // Pedestrians loop.
-    for (auto i = 0; i < ps.size(); ++i) { // Need index i!
-      
+
+    // Calculate the resultant force for each pedestrian.
+    #pragma omp parallel for
+    for (auto i = 0; i < ps.size(); ++i) {
       // Create a vector of other pedestrians.
       sfm::VP other_ps = ps;
       other_ps.erase(other_ps.begin() + i);
-      
-      // Update each pedestrian's velocity.
-      ps[i]->SetVelocity(ps[i]->GetVelocity() + (sfm::ResultantForce(ps[i], other_ps, (double)(DT / 1000.0)) * (double)(DT / 1000.0)));
-      
-      // Update each pedestrian's position.
-      ps[i]->SetPosition(ps[i]->GetPosition() + (ps[i]->GetVelocity() * (double)(DT / 1000.0)));
-      
+      // Calculate the resultant force.
+      rs[i] = sfm::ResultantForce(ps[i], other_ps, DT);
+    }
+
+    // Update the velocity and position for each pedestrian.
+    #pragma omp parallel for
+    for (auto i = 0; i < ps.size(); ++i) {
+      // Update the velocity.
+      ps[i]->SetVelocity(ps[i]->GetVelocity() + rs[i] * DT);
+      // Update the position.
+      ps[i]->SetPosition(ps[i]->GetPosition() + (ps[i]->GetVelocity() * DT));
       // Print updated velocities and positions at time t.
       std::cout << " " << ps[i]->GetVelocity().GetXLength() << " " << ps[i]->GetVelocity().GetYLength();
       std::cout << " " << ps[i]->GetPosition().GetX() << " " << ps[i]->GetPosition().GetY();
     }
+
     std::cout << std::endl;
   }
 

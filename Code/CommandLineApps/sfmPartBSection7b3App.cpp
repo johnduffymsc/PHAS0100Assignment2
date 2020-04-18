@@ -74,7 +74,7 @@ int main(int argc, char** argv)
     std::cout << t;
 
     // Pedestrians loop.
-    #pragma omp parallel for
+    #pragma omp parallel for firstprivate(t, ps)
     for (auto i = 0; i < ps.size(); ++i) {
       
       // Create a vector of other pedestrians.

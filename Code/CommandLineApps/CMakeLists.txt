@@ -22,6 +22,7 @@ set(_command_line_apps
   sfmPartBSection7aApp
   sfmPartBSection7b1App
   sfmPartBSection7b2App
+  sfmPartBSection7b3App
 )
 
 foreach(_app ${_command_line_apps})

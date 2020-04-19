@@ -92,7 +92,7 @@ sudo apt install eog
 
 This application generates output data for the dynamics of 4 pedestrians moving in a corridor under the influence of the Pedestrian-Destination, Pedestrian-Border (top and bottom corridor borders) and Pedestrian-Pedestrian forces.
 
-The corridor is of dimensions, x in the interval [0, 50], and y in the interval [0, 10].
+The corridor is of dimensions x in the interval [0, 50] and y in the interval [0, 10].
 
 Pedestrian #1 starts at the (x, y) position (0, 1), heading in the positive x direction, targeting the opposite corridor position (50, 1).
 
@@ -117,7 +117,7 @@ At the Gnuplot prompt:
 ```
 gnuplot> load "../PHAS0100Assignment2/Gnuplot/sfmPartASection4App.gnuplot"
 ```
-This will open up an image window from where the plot can be saved as a PNG image (or PDF, or image other format).
+This will open up an image window from where the plot can be saved as a PNG image (or PDF, or other image format).
 
 Then type 'q' to close the image window. Then press 'q' again at the Gnuplot prompt to exit Gnuplot.
 
@@ -125,12 +125,7 @@ A sample PNG image with description is provided below.
 
 ![](sfmPartASection4App.png)
 
-
-
-
-
-
-
+As can be seen from the plot, Pedestrian #1 starts to move in the positive x direction under the influence of the Pedestrian-Destination force. An accelleration under this force is evident in the first few timesteps. At the same time the pedestrian is repelled from the bottom border by the Pedestrian-Border force (and also repelled from the top border but by a much weaker force), so the pedestrian does not travel in a straight line. The pedestrian travels in a curve which is the equillibrium path between all of the forces. Due to the distance from other pedestrians there is no discernible "avoiding action". As the pedestrian approaches the destination the Pedestrian-Destination force dominates, and the pedestrian reaches the destination and then wraps of the "end of the world" back to the starting point. This wrap is evident in the pedestrian path.
 
 
 ### Application sfmPartASection5App

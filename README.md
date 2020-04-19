@@ -6,7 +6,7 @@
 
 This coursework provides command line applications to implement Social Force Model for Pedestrian Dynamics (Helbing & Molnar).
 
-The names of the applications match the coursework requirements as follows:
+The names of the applications match the coursework instructions as follows:
 
 * sfmPartASection4App
 * sfmPartASection5App
@@ -50,7 +50,6 @@ Due to time pressure to complete this coursework (due to other pressing coursewo
 This assignment has been submitted as a zip file as required by the assignment instructions.
 
 To install from the zip file:
-
 ```
 unzip 19154676.zip
 cd 19154676
@@ -65,9 +64,7 @@ ctest -V
 ```
 The executable applications will be in the PHAS0100Assignment2-Build/bin directory.
 
-
 Additionally, this assignment can be built from a private GitHub respository. The repository is private to prevent plagiarism, again, as required by the assignment instructions. To obtain the username and password for this repository please contact [John Duffy](mailto:john.duffy.19@ucl.ac.uk). To build from this repository:
-
 ```
 git clone https://github.com/johnduffymsc/PHAS0100Assignment2.git
 mkdir PHAS0100Assignment2-Build
@@ -82,91 +79,88 @@ ctest -V
 The executable applications will be in the PHAS0100Assignment2-Build/bin directory.
 
 To install Gnuplot (on Ubuntu 18.04):
-
 ```
 sudo apt install gnuplot
 ```
-
 To install Eye of GNOME (on Ubuntu 18.04):
-
 ```
 sudo apt install eog
 ```
 ## Useage
 
+### Application sfmPartASection4App
+
+This application generates output data for the dynamics of 4 pedestrians moving in a corridor under the influence of the Pedestrian-Destination, Pedestrian-Border (top and bottom corridor borders) and Pedestrian-Pedestrian forces.
+
+The corridor is of dimensions, x in the interval [0, 50], and y in the interval [0, 10].
+
+Pedestrian #1 starts at the (x, y) position (0, 1), heading in the positive x direction, targeting the opposite corridor position (50, 1).
+
+Pedestrian #2 starts at the (x, y) position (0, 9), heading in the positive x direction, targeting the opposite corridor position (50, 9).
+
+Pedestrian #3 starts at the (x, y) position (50, 4.9), heading in the negative x direction, targeting the opposite corridor position (0, 4.9).
+
+Pedestrian #4 starts at the (x, y) position (0, 5.1), heading in the positive x direction, targeting the opposite corridor position (50, 5.1).
+
+The application is run, using a time step of 0.25s and a run time of 40s, as follows:
+```
+cd PHAS0100Assignment2-Build
+bin/sfmPartASection4App > sfmPartASection4App.data
+```
+Th sfmPartASection4App.data file will be in the PHAS0100Assignment2-Build directory.
+
+To visualise this data file using the provided Gnuplot scripts type the Gnuplot command:
+```
+gnuplot
+```
+At the Gnuplot prompt:
+```
+gnuplot> load "../PHAS0100Assignment2/Gnuplot/sfmPartASection4App.gnuplot"
+```
+This will open up an image window from where the plot can be saved as a PNG image (or PDF, or image other format).
+
+Then type 'q' to close the image window. Then press 'q' again at the Gnuplot prompt to exit Gnuplot.
+
+A sample PNG image with description is provided below.
+
 ![](sfmPartASection4App.png)
+
+
+
+
+
+
+
+
+
+### Application sfmPartASection5App
+
 ![](sfmPartASection5App.png)
+
+### Application sfmPartBSection6dApp
+
 ![](sfmPartBSection6dApp.png)
+
+### Application sfmPartBSection6eApp
+
 ![](sfmPartBSection6eApp.png)
+
+### Application sfmPartBSection7aApp
+
 ![](sfmPartBSection7aApp.png)
+
+### Application sfmPartBSection7b1App
+
 ![](sfmPartBSection7b1App.png)
+
+### Application sfmPartBSection7b2App
+
 ![](sfmPartBSection7b2App.png)
+
+### Application sfmPartBSection7b3pp
+
 ![](sfmPartBSection7b3App.png)
 
 
 
 
-Useage
-------
-
-From the PHAS0100Assignment1-Build/bin directory:
-
-```
-lrgLeastSquaresSolver --file datafile --solver ['normal_equations'|'gradient_descent']
-```
-or
-```
-lrgLeastSquaresSolver --rand theta0 theta1 noise_mean noise_sigma --solver ['normal_equations'|'gradient_descent']
-```
-
-The executable will automatically produce a Gnuplot script in the current directory. To produce a PNG plot of the input data and resultant regression line from this script:
-
-```
-gnuplot lrgLeastSquaresSolver.plt
-```
-
-This will produce lrgLeastSquaresSolver.png in the current directory.
-
-To easily view the plot from the command line using Eye of GNOME:
-```
-eog lrgLeastSquaresSolver.png
-```
-
-Examples
---------
-
-From the PHAS0100Assignment1-Build/bin directory:
-
-```
-lrgLeastSquaresSolver --file ../../PHAS0100Assignment1/Testing/Data/TestData1.txt --solver 'normal_equations'
-gnuplot lrgLeastSquaresSolver.plt
-eog lrgLeastSquaresSolver.png
-```
-
-
-```
-lrgLeastSquaresSolver --file ../../PHAS0100Assignment1/Testing/Data/TestData1.txt --solver 'gradient_descent'
-gnuplot lrgLeastSquaresSolver.plt
-eog lrgLeastSquaresSolver.png
-```
-
-
-```
-lrgLeastSquaresSolver --file ../../PHAS0100Assignment1/Testing/Data/TestData2.txt --solver 'normal_equations'
-gnuplot lrgLeastSquaresSolver.plt
-eog lrgLeastSquaresSolver.png
-```
-
-
-```
-lrgLeastSquaresSolver --file ../../PHAS0100Assignment1/Testing/Data/TestData2.txt --solver 'gradient_descent'
-gnuplot lrgLeastSquaresSolver.plt
-eog lrgLeastSquaresSolver.png
-```
-
-
-```
-lrgLeastSquaresSolver --rand 10.0 0.0 0.0 3.0 --solver 'normal_equations'
-gnuplot lrgLeastSquaresSolver.plt
-eog lrgLeastSquaresSolver.png
-```

@@ -1,4 +1,5 @@
 set term qt font "arial,18"
+set output "sfmPartASection4App.png"
 plot [0:50][0:10] "sfmPartASection4App.data" u 4:5 t "Pedestrian #01",\
 "" u 8:9 t "Pedestrian #02",\
 "" u 12:13 t "Pedestrian #03",\

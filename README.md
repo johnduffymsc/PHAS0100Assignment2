@@ -190,11 +190,33 @@ As can be seen from the plot, the force that dominates initially is the Pedestri
 
 ### Application sfmPartBSection7aApp
 
+This application demonstrates benchmarking using std::chrono::high_resolution_clock and std::clock.
+
+A Linux terminal screenshot of how to run the application and the output is provided below.
+
 ![](sfmPartBSection7aApp.png)
+
+As can be seen from the application output, because this is a single threaded application, the CPU and Wall timings are nearly identical.
+
+However, of note is that there is significant "jitter" between the 4 runs of the application, with a minimum time of  47.7ms and a maximum of 51.3ms. This is to be expected since the operating system will be allocating resources and other processes differently on each occasssion (and we are running in a virtualised environment).
+
+To get a better average application run time a 'bash' loop was used to run the application 1000 times. This resulted in an average run time of 39.5ms (39.5s / 1000).
 
 ### Application sfmPartBSection7b1App
 
+This application demonstrates the use of OpenMP to parallelise code to improve performance. sfmPartBSection7b1App uses a single "#pragma omp parallel for" loop.
+
+A Linux terminal screenshot of how to run the application, using different numbers of threads, and the output is provided below.
+
 ![](sfmPartBSection7b1App.png)
+
+To avoid "jitter" a 'bash' loop was used to run the application 1000 times.
+
+As can been seen from the results, single threaded 7a took an average of 38.4ms, while 7b1 took 47.4ms, 34.1ms, 28.4ms and 26.7ms, for 1, 2, 3 and 4 threads, respectively.
+
+From these timings it can be determined that there is an overhead is using OpenMP, but when the number of threads is increased the run time can be reduced compared to the single threaded case.
+
+Using 4 threads produced a 30% time saving. This is certaining not a linear reduction in time with number of threads. However, the use of OpenMP in this appllication is relatively naiive, and this application is data output intensive which may be difficult to parallelise effectively without each thread writing to a different file.
 
 ### Application sfmPartBSection7b2App
 

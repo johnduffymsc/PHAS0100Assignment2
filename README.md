@@ -1,36 +1,50 @@
-PHAS0100Assignment2
-------------------
+# PHAS0100Assignment2
 
-Purpose
--------
-Coursework 2 by John Duffy for PHAS0100 Research Computing with C++ 2019/2020 at UCL.
+**Coursework 2 by John Duffy for PHAS0100 Research Computing with C++ 2019/2020.**
 
-A program to implement Social Force Model for Pedestrian Dynamics (Helbing & Molnar).
+## Description
 
-Data is supplied from a data file via the --file option, or is randomly generated via --rand option. The options --file and --rand are mutually exclusive. The data file format is space delimited 'x y' pairs, one pair on each line. The --rand option generates linear data from user specified intercept and gradient values, together with the mean and and standard deviation of random noise which is applied to the data.
+This coursework provides command line applications to implement Social Force Model for Pedestrian Dynamics (Helbing & Molnar).
 
-The method used to solve the linear regression is one of 'normal_equations' or 'gradient_descent', which is selected via the --solver option.
+The names of the applications match the coursework requirements as follows:
 
-The program returns the intercept and gradient (theta0 and theta1) of the linear regression.
+* sfmPartASection4App
+* sfmPartASection5App
+* sfmPartBSection6dApp
+* sfmPartBSection6eApp
+* sfmPartBSection7aApp
+* sfmPartBSection7b1App
+* sfmPartBSection7b2App
+* sfmPartBSection7b3App
 
-Additionally, the program generates a Gnuplot script which can be used to generate a PNG plot of the data and resultant regression line. This can be viewed easily from the command line using the Eye of GNOME command, eog, or a similar image viewer. It is not necessary to install Gnuplot to perform the Linear Regression or produce the script, only to produce the PNG plot.
+Details on how to use these programs and sample output is provided below. The output from these programs is provided as PNG visualised data or Linux terminal screenshots.
+
+Gnuplot scripts are used to produce the PNG images. The images can be easily viewed from the command line using the Eye of GNOME (eog) command, or a similar image viewer. Details on how to install Gnuplot and eog, and how to use the provided Gnuplot scripts, are also provided below.
+
+## Differences from Coursework Specification
+
+### Use of sfmTypes instead of sfmBasicTypes
+
+During early development an issue with sfmBasicTypes (provided with the suggested coursework template) was identified. Specifically, because all of the methods of sfmBasicTypes use reference parameters, it was not possible to chain operations together, or use compound statements, using on the provided vec2d, pos2d and dir2d types. This issue was susequently rectified, but in the meantime I decided to implement my own functionality as sfmTypes.
+
+sfmTypes provides two classes, Pos2d and Vec2d. Pos2d is used for 2D positions defined by x and y values. Vec2d is used for all 2D vector quantities (e.g. velocity, accelleration, direction) defined by x and y lengths.
+
+sfmTypes methods only support call-by-value parameters. This is a design decision which enables simple chained/compound use.
+
+For clarity and simplicity, sfmTypes only implements the bare minium of operator/methods required.
+
+sfmTypes provides the wrapping functionality of sfmBasicTypes, but enables Pos2d object instantiation at "world boundaries" without immediate wrapping. This removes the restriction of having to set a destination position slightly less than a "world boundary". The wrapping functionality utilises a recursive method, sfmTypes::Wrap. Full unit testing of sfmTypes is provided.
+
+### Pedestrian Border Repulsive Force
 
 
-Evidence of Correct Functionality
----------------------------------
-
-![](sfmPartASection4App.png)
-![](sfmPartASection5App.png)
-![](sfmPartBSection6dApp.png)
-![](sfmPartBSection6eApp.png)
-![](sfmPartBSection7aApp.png)
-![](sfmPartBSection7b1App.png)
-![](sfmPartBSection7b2App.png)
-![](sfmPartBSection7b3App.png)
+### Use of Gnuplot instead of sfm::Visualiser
 
 
-Installation and Build Instructions
------------------------------------
+
+
+
+## Installation and Build Instructions
 
 This assignment has been submitted as a zip file, as required by the assignment instructions. To install from the zip file:
 
@@ -75,6 +89,22 @@ To install Eye of GNOME (on Ubuntu 18.04):
 ```
 sudo apt install eog
 ```
+
+
+
+## Useage
+
+![](sfmPartASection4App.png)
+![](sfmPartASection5App.png)
+![](sfmPartBSection6dApp.png)
+![](sfmPartBSection6eApp.png)
+![](sfmPartBSection7aApp.png)
+![](sfmPartBSection7b1App.png)
+![](sfmPartBSection7b2App.png)
+![](sfmPartBSection7b3App.png)
+
+
+
 
 Useage
 ------

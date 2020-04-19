@@ -21,11 +21,11 @@ Details on how to use these programs and sample output is provided below. The ou
 
 Gnuplot scripts are used to produce the PNG images. The images can be easily viewed from the command line using the Eye of GNOME (eog) command, or a similar image viewer. Details on how to install Gnuplot and eog, and how to use the provided Gnuplot scripts, are also provided below.
 
-## Differences from Coursework Specification
+## Differences from Coursework Instructions
 
 ### Use of sfmTypes instead of sfmBasicTypes
 
-During early development an issue with sfmBasicTypes (provided with the suggested coursework template) was identified. Specifically, because all of the methods of sfmBasicTypes use reference parameters, it was not possible to chain operations together, or use compound statements, using on the provided vec2d, pos2d and dir2d types. This issue was susequently rectified, but in the meantime I decided to implement my own functionality as sfmTypes.
+During early development an issue with sfmBasicTypes (provided with the suggested coursework template) was identified. Specifically, because all of the methods of sfmBasicTypes use reference parameters, it was not possible to chain operations together, or use compound statements, using the provided vec2d, pos2d and dir2d types. This issue was susequently rectified, but in the meantime I decided to implement my own functionality as sfmTypes.
 
 sfmTypes provides two classes, Pos2d and Vec2d. Pos2d is used for 2D positions defined by x and y values. Vec2d is used for all 2D vector quantities (e.g. velocity, accelleration, direction) defined by x and y lengths.
 
@@ -37,46 +37,49 @@ sfmTypes provides the wrapping functionality of sfmBasicTypes, but enables Pos2d
 
 ### Pedestrian Border Repulsive Force
 
+The coursework instructions state that only the closest border should be considered when determining the Pedestrian-Border repulsive force, whereas the Helbing and Molnar paper sums all Pedestrian-Border forces.
+
+I made the design decision to sum the top and bottom corridor Pedestrian-Border forces. The reason for this decision is that it is more aligned with the Helbing and Molnar paper, and also cleaner to implement as no test for the closest border is required.
 
 ### Use of Gnuplot instead of sfm::Visualiser
 
-
-
-
+Due to time pressure to complete this coursework (due to other pressing coursework deadlines!) and prior to the availability of sfm::Visualiser, I implemented output data visualisation using Gnuplot. This visualisation tool has been used for my final submission after confirmation from Jim (by email) that no marks will be lost for doing so.
 
 ## Installation and Build Instructions
 
-This assignment has been submitted as a zip file, as required by the assignment instructions. To install from the zip file:
+This assignment has been submitted as a zip file as required by the assignment instructions.
+
+To install from the zip file:
 
 ```
 unzip 19154676.zip
 cd 19154676
-mkdir PHAS0100Assignment1-Build
-cd PHAS0100Assignment1-Build
-cmake ../PHAS0100Assignment1
+mkdir PHAS0100Assignment2-Build
+cd PHAS0100Assignment2-Build
+cmake ../PHAS0100Assignment2
 make
 ```
-To run the tests:
+To run the tests (with verbose output):
 ```
-ctest
+ctest -V
 ```
-The executable, lrgLeastSquaresSolver, will be in the PHAS0100Assignment1-Build/bin directory.
+The executable applications will be in the PHAS0100Assignment2-Build/bin directory.
 
 
 Additionally, this assignment can be built from a private GitHub respository. The repository is private to prevent plagiarism, again, as required by the assignment instructions. To obtain the username and password for this repository please contact [John Duffy](mailto:john.duffy.19@ucl.ac.uk). To build from this repository:
 
 ```
-git clone https://github.com/johnduffymsc/PHAS0100Assignment1.git
-mkdir PHAS0100Assignment1-Build
-cd PHAS0100Assignment1-Build
-cmake ../PHAS0100Assignment1
+git clone https://github.com/johnduffymsc/PHAS0100Assignment2.git
+mkdir PHAS0100Assignment2-Build
+cd PHAS0100Assignment2-Build
+cmake ../PHAS0100Assignment2
 make
 ```
-To run the tests:
+To run the tests (with verbose output):
 ```
-ctest
+ctest -V
 ```
-The executable, lrgLeastSquaresSolver, will be in the PHAS0100Assignment1-Build/bin directory.
+The executable applications will be in the PHAS0100Assignment2-Build/bin directory.
 
 To install Gnuplot (on Ubuntu 18.04):
 
@@ -89,9 +92,6 @@ To install Eye of GNOME (on Ubuntu 18.04):
 ```
 sudo apt install eog
 ```
-
-
-
 ## Useage
 
 ![](sfmPartASection4App.png)

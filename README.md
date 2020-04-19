@@ -144,7 +144,7 @@ The application is run, using a time step of 0.25s and a run time of 40s, as fol
 cd PHAS0100Assignment2-Build
 bin/sfmPartASection5App > sfmPartASection5App.data
 ```
-Th sfmPartASection4App.data file will be in the PHAS0100Assignment2-Build directory.
+Th sfmPartASection5App.data file will be in the PHAS0100Assignment2-Build directory.
 
 The data file can be visualised in a similar manner as described in the section above.
 
@@ -156,13 +156,37 @@ As can be seen from the plot, the pedestrians move under the influence of all of
 
 It is important to note that where tradjectories cross, this occurs at different times for each pedestrian, so the pedestrians do not actual collide.
 
+Wrapping off the "end of the world" is evident in the pedestrian tradjectories.
+
 ### Application sfmPartBSection6dApp
+
+This application generates output data for the dynamics of 10 Targeted pedestrians moving in a corridor under the influence of the Pedestrian-Destination, Pedestrian-Border (top and bottom corridor borders) and Pedestrian-Pedestrian forces.
+
+The 10 pedestrians are generated at random starting points in a box x = [0, 2] and y = [4, 6], moving in a positive x direction, targeting the mid-point of the opposite wall.
+
+The application is run and visualised in a similar manner as previously described.
+
+A sample PNG image with description is provided below for a timestep of 0.25s and a run time of 15s.
 
 ![](sfmPartBSection6dApp.png)
 
+As can be seen from the plot, the force that dominates initially is the Pedestrian-Pedestrian repulsive force which causes the pedestrians to move away from each other, before settling on to relatively stable tradjectories towards the target. 
+
 ### Application sfmPartBSection6eApp
 
+This application generates output data for the dynamics of 10 Targeted pedestrians and 10 Directional pedestrians moving in a corridor under the influence of the Pedestrian-Destination, Pedestrian-Border (top and bottom corridor borders) and Pedestrian-Pedestrian forces.
+
+The 10 Targeted pedestrians are generated at random starting points in a box x = [0, 2] and y = [4, 6], moving in a positive x direction, targeting the mid-point of the opposite wall.
+
+The 10 Directional pedestrians are generated at random starting points in a box x = [48, 50] and y = [4, 6], moving in a negative x direction.
+
+The application is run and visualised in a similar manner as previously described.
+
+A sample PNG image with description is provided below for a timestep of 0.25s and a run time of 15s.
+
 ![](sfmPartBSection6eApp.png)
+
+As can be seen from the plot, the force that dominates initially is the Pedestrian-Pedestrian repulsive force which causes the pedestrians to move away from each other, before settling on to relatively stable tradjectories.
 
 ### Application sfmPartBSection7aApp
 

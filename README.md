@@ -107,7 +107,7 @@ The application is run, using a time step of 0.25s and a run time of 40s, as fol
 cd PHAS0100Assignment2-Build
 bin/sfmPartASection4App > sfmPartASection4App.data
 ```
-Th sfmPartASection4App.data file will be in the PHAS0100Assignment2-Build directory.
+The sfmPartASection4App.data file will be in the PHAS0100Assignment2-Build directory.
 
 To visualise this data file using the provided Gnuplot scripts type the Gnuplot command:
 ```
@@ -125,12 +125,36 @@ A sample PNG image with description is provided below.
 
 ![](sfmPartASection4App.png)
 
-As can be seen from the plot, Pedestrian #1 starts to move in the positive x direction under the influence of the Pedestrian-Destination force. An accelleration under this force is evident in the first few timesteps. At the same time the pedestrian is repelled from the bottom border by the Pedestrian-Border force (and also repelled from the top border but by a much weaker force), so the pedestrian does not travel in a straight line. The pedestrian travels in a curve which is the equillibrium path between all of the forces. Due to the distance from other pedestrians there is no discernible "avoiding action". As the pedestrian approaches the destination the Pedestrian-Destination force dominates, and the pedestrian reaches the destination and then wraps of the "end of the world" back to the starting point. This wrap is evident in the pedestrian path.
+As can be seen from the plot, Pedestrian #1 starts to move in the positive x direction under the influence of the Pedestrian-Destination force. An accelleration under this force is evident in the first few timesteps. At the same time the pedestrian is repelled from the bottom border by the Pedestrian-Border force (and also repelled from the top border but by a much weaker force), so the pedestrian does not travel in a straight line. The pedestrian travels in a curve which is the equillibrium path between all of the forces. Due to the distance from other pedestrians there is no discernible "avoiding action". As the pedestrian approaches the destination the Pedestrian-Destination force dominates and the pedestrian reaches the destination, and then wraps off the "end off the world" back to the starting point. This wrap is evident in the pedestrian path.
 
+Pedestrian #2 moves in similar manner in proximity to the top border.
+
+Pedestrians #3 and #4 start at opposite ends of the corridor moving towards each other. Because they are moving in the centre of the corridor there is no discernible Pedestrian-Border force acting upon them so they move, initially, in an approximate straight line. However, as they approach each other they both take "avoiding action" under the Pedestrian-Pedestrian force, before continuing towards their respective destinations. They reach their respective destinations and wrap off the "end of the world" back to their starting points. The wrap is evident in their paths.
 
 ### Application sfmPartASection5App
 
+This application generates output data for the dynamics of 20 pedestrians moving in a corridor under the influence of the Pedestrian-Destination, Pedestrian-Border (top and bottom corridor borders) and Pedestrian-Pedestrian forces.
+
+10 pedestrians start at x = 0 with random y intervals, moving in a positive x direction, targeting x = 50 with random y intervals.
+
+10 pedestrians start at x = 50 with random y intervals, moving in a negative x direction, targeting x = 0 with random y intervals.
+
+The application is run, using a time step of 0.25s and a run time of 40s, as follows:
+```
+cd PHAS0100Assignment2-Build
+bin/sfmPartASection5App > sfmPartASection5App.data
+```
+Th sfmPartASection4App.data file will be in the PHAS0100Assignment2-Build directory.
+
+The data file can be visualised in a similar manner as described in the section above.
+
+A sample PNG image with description is provided below.
+
 ![](sfmPartASection5App.png)
+
+As can be seen from the plot, the pedestrians move under the influence of all of the forces, but "avoiding action" is more evident.
+
+It is important to note that where tradjectories cross, this occurs at different times for each pedestrian, so the pedestrians do not actual collide.
 
 ### Application sfmPartBSection6dApp
 

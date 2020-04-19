@@ -220,11 +220,23 @@ Using 4 threads produced a 30% time saving. This is certaining not a linear redu
 
 ### Application sfmPartBSection7b2App
 
+This application demonstrates the use of OpenMP to parallelise code to improve performance. sfmPartBSection7b2App uses two "#pragma omp parallel for" loops, one to calculate the resultant forces and one to update the pedestrian velocities and positions.
+
+A Linux terminal screenshot of how to run the application, using different numbers of threads, and the output is provided below.
+
 ![](sfmPartBSection7b2App.png)
+
+As can be seen from the results, the performance of this application is worse than that of 7b1. This is probably due to a naiive use of OpenMP.
 
 ### Application sfmPartBSection7b3pp
 
+This application demonstrates the use of OpenMP to parallelise code to improve performance. sfmPartBSection7b3App again uses a single "#pragma omp parallel for" loop, but also uses 'firstprivate' to give each thread a copy of pertinent data.
+
+A Linux terminal screenshot of how to run the application, using different numbers of threads, and the output is provided below.
+
 ![](sfmPartBSection7b3App.png)
+
+The results are similar to those of 7b1. A less naiive use of OpenMP may produce improved results.
 
 
 
